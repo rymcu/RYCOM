@@ -78,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
          qlbLinkRYMCU->setOpenExternalLinks(true);//状态栏显示官网、源码链接
          qlbLinkRYMCU->setText("<style> a {text-decoration: none} </style> <a href=\"https://rymcu.com\">--RYMCU官网--");// 无下划线
          qlbLinkSource->setOpenExternalLinks(true);
-         qlbLinkSource->setText("<style> a {text-decoration: none} </style> <a href=\"https://github.com/Hugh-rymcu\">--助手源代码--");// 无下划线
+         qlbLinkSource->setText("<style> a {text-decoration: none} </style> <a href=\"https://github.com/rymcu/RYCOM\">--助手源代码--");// 无下划线
 }
 
 /***********************************************************
