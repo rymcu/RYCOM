@@ -4,13 +4,13 @@ RYCOM是一款开源的串口调试助手，使用QT设计，C++编写，可在W
 # RYCOM
 
 #### 20211215 RYCOM2.0.exe
-  1.修复发送十六进制0x00错误问题；
-  2.增加STM32串口下载程序功能，支持.bin和.hex格式，支持STM32F1,STM32F4系列；
-  3.STM32串口ISP操作手册，https://www.rymcu.com/article/261
+- 1.修复发送十六进制0x00错误问题； 
+- 2.增加STM32串口下载程序功能，支持.bin和.hex格式，支持STM32F1,STM32F4系列；
+- 3.STM32串口ISP操作手册，https://www.rymcu.com/article/261
   
 #### 20210208 RYCOM1.0.exe/dmg
-  1.支持基本串口收、发功能；
-  2.支持周期发送，十六进制发送、接收等功能。
+- 1.支持基本串口收、发功能；
+- 2.支持周期发送，十六进制发送、接收等功能。
 ## ⚡ 动机
 
 受到 [ronger](https://www.rymcu.com/user/ronger) 的跨平台串口助手[nebula-helper](https://www.rymcu.com/user/ronger)启发, 打造一个基于C++的类似项目。
