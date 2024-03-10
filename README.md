@@ -2,7 +2,12 @@
 
 RYCOM是一款开源的串口调试助手，使用QT设计，C++编写，可在Windows、Linux、MacOS操作系统上使用。
 # RYCOM
-
+ #### 20240310 RYCOM2.3.exe/dmg
+- 1.优化STM32串口ISP
+- 2.支持串口ISP一键下载，支持目标文件更新自动启动串口ISP
+#### 20220730 RYCOM2.2.exe/dmg
+- 1.增加串口Ymodem发送文件功能
+- 2.优化界面文字大小
 #### 20211215 RYCOM2.0.exe
 - 1.修复发送十六进制0x00错误问题； 
 - 2.增加STM32串口下载程序功能，支持.bin和.hex格式，支持STM32F1,STM32F4系列；
