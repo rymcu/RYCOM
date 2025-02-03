@@ -22,6 +22,7 @@
 #include"QObject"
 
 #include <QFileInfo>
+#include <QSettings>
 
 extern QSerialPort MyCom;//串口对象，项目中唯一的串口对象
 

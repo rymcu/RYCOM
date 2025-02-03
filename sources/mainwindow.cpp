@@ -1745,17 +1745,27 @@ void MainWindow::on_radioButton_combine_clicked()
 void MainWindow::SetESP32LineEditText(location_code_t lacation)
 {
     //写文件
-     QString curPath=QDir::currentPath();//获取系统当前目录
+     //QString curPath=QDir::currentPath();//获取系统当前目录
      QString dlgTitle="打开一个文件"; //对话框标题
      //QString filter="(*.hex);;(*.bin);;所有文件(*.*)"; //文件过滤器
      QString filter="(*.bin)"; //文件过滤器
-     QString aFileName=QFileDialog::getOpenFileName(NULL,dlgTitle,curPath,filter);
+     //添加打开路径保留功能
+      QSettings settings("RYMCU", "RYCOM");
+      // 从 QSettings 中读取上一次的路径，如果没有则使用当前目录
+     QString lastPath = settings.value("lastFilePath", QDir::currentPath()).toString();
 
+     QString aFileName=QFileDialog::getOpenFileName(NULL,dlgTitle,lastPath,filter);
     if (aFileName.isEmpty())
     {
          QMessageBox::critical(this, "提示", "文件为空！");
          return;
     }
+    //保存当前路径
+    QFileInfo fileInfo(aFileName);
+    QString dirPath = fileInfo.absolutePath();
+    // 将当前选择的文件所在目录保存到 QSettings 中
+    settings.setValue("lastFilePath", dirPath);
+
     switch (lacation) {
     case BOOT_COMBIN:
         ui->lineEdit_BOOT_Combine->setText(aFileName);
