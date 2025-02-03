@@ -28,11 +28,25 @@ RC_ICONS = rymculogo.ico
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    mycombobox.cpp
+    mycombobox.cpp \
+    ryisp.cpp \
+    mycom.cpp \
+    HexToBin.cpp \
+    ry_ymodem.cpp \
+    myfilewatcher.cpp \
+    ryesp32isp.cpp
 
 HEADERS += \
         mainwindow.h \
-    mycombobox.h
+    mycombobox.h \
+    ryisp.h \
+    mycom.h \
+    HexToBin.h \
+    HexToBin.h \
+    ry_ymodem.h \
+    myfilewatcher.h \
+    ryesp32isp.h \
+    esp32/esp32_protocol.h
 
 FORMS += \
         mainwindow.ui

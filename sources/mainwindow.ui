@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>729</width>
-    <height>587</height>
+    <width>728</width>
+    <height>789</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>RYMCU串口调试助手V1.0  www.rymcu.com</string>
+   <string>RYCOM串口调试助手V2.6.0 rymcu.com嵌入式知识学习交流平台</string>
   </property>
   <property name="dockNestingEnabled">
    <bool>false</bool>
@@ -44,6 +44,11 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>1000</string>
     </property>
@@ -51,11 +56,16 @@
    <widget class="QLabel" name="labelMS">
     <property name="geometry">
      <rect>
-      <x>700</x>
+      <x>695</x>
       <y>370</y>
       <width>16</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>ms</string>
@@ -82,7 +92,7 @@
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>161</width>
+      <width>171</width>
       <height>191</height>
      </rect>
     </property>
@@ -92,9 +102,9 @@
     <widget class="QPushButton" name="pushButtonOpen">
      <property name="geometry">
       <rect>
-       <x>80</x>
+       <x>78</x>
        <y>160</y>
-       <width>71</width>
+       <width>81</width>
        <height>23</height>
       </rect>
      </property>
@@ -131,11 +141,16 @@
     <widget class="QComboBox" name="comboBoxCheck">
      <property name="geometry">
       <rect>
-       <x>80</x>
+       <x>78</x>
        <y>125</y>
-       <width>69</width>
+       <width>81</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
      </property>
      <item>
       <property name="text">
@@ -179,11 +194,16 @@
     <widget class="QComboBox" name="comboBoxStop">
      <property name="geometry">
       <rect>
-       <x>80</x>
+       <x>78</x>
        <y>99</y>
-       <width>69</width>
+       <width>81</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
      </property>
      <item>
       <property name="text">
@@ -204,21 +224,43 @@
     <widget class="myComboBox" name="comboBoxNo">
      <property name="geometry">
       <rect>
-       <x>8</x>
-       <y>21</y>
-       <width>141</width>
-       <height>20</height>
+       <x>10</x>
+       <y>20</y>
+       <width>151</width>
+       <height>23</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
+     </property>
+     <property name="minimumContentsLength">
+      <number>0</number>
      </property>
     </widget>
     <widget class="QComboBox" name="comboBoxData">
      <property name="geometry">
       <rect>
-       <x>80</x>
+       <x>78</x>
        <y>73</y>
-       <width>69</width>
+       <width>81</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
      </property>
      <property name="currentIndex">
       <number>3</number>
@@ -263,15 +305,25 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>80</x>
+       <x>78</x>
        <y>47</y>
-       <width>69</width>
+       <width>81</width>
        <height>20</height>
       </rect>
      </property>
-     <property name="currentIndex">
-      <number>3</number>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
      </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>115200</string>
+      </property>
+     </item>
      <item>
       <property name="text">
        <string>1200</string>
@@ -309,11 +361,6 @@
      </item>
      <item>
       <property name="text">
-       <string>74880</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
        <string>115200</string>
       </property>
      </item>
@@ -332,15 +379,57 @@
        <string>576000</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>921600</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>1382400</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>自定义</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QRadioButton" name="radioButton_led">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>150</y>
+       <width>31</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QRadioButton::indicator:checked{background-color:red;}
+QRadioButton::indicator:unchecked{background-color:black;}
+QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
     </widget>
    </widget>
    <widget class="QGroupBox" name="groupBoxSendSet">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>388</y>
-      <width>161</width>
-      <height>141</height>
+      <y>390</y>
+      <width>171</width>
+      <height>121</height>
      </rect>
     </property>
     <property name="title">
@@ -349,9 +438,9 @@
     <widget class="QPushButton" name="pushButtonClearSend">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>70</y>
-       <width>95</width>
+       <x>78</x>
+       <y>30</y>
+       <width>81</width>
        <height>23</height>
       </rect>
      </property>
@@ -362,9 +451,9 @@
     <widget class="QPushButton" name="pushButtonRdFile">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>50</y>
-       <width>95</width>
+       <x>78</x>
+       <y>10</y>
+       <width>81</width>
        <height>23</height>
       </rect>
      </property>
@@ -375,9 +464,9 @@
     <widget class="QCheckBox" name="checkBoxSendHex">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>120</y>
-       <width>101</width>
+       <x>80</x>
+       <y>60</y>
+       <width>71</width>
        <height>16</height>
       </rect>
      </property>
@@ -388,9 +477,9 @@
     <widget class="QCheckBox" name="checkBoxAddNewShift">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>100</y>
-       <width>95</width>
+       <x>80</x>
+       <y>80</y>
+       <width>71</width>
        <height>16</height>
       </rect>
      </property>
@@ -401,13 +490,26 @@
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QCheckBox" name="checkBoxAutoDownload">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>100</y>
+       <width>101</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>自动启动下载</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBoxRevSet">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>230</y>
-      <width>161</width>
+      <y>190</y>
+      <width>171</width>
       <height>131</height>
      </rect>
     </property>
@@ -417,7 +519,7 @@
     <widget class="QCheckBox" name="checkBoxRevHex">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>80</x>
        <y>110</y>
        <width>101</width>
        <height>16</height>
@@ -439,7 +541,7 @@
     <widget class="QCheckBox" name="checkBoxReVTime">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>80</x>
        <y>90</y>
        <width>95</width>
        <height>16</height>
@@ -452,9 +554,9 @@
     <widget class="QPushButton" name="pushButtonClearRev">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>78</x>
        <y>60</y>
-       <width>95</width>
+       <width>81</width>
        <height>23</height>
       </rect>
      </property>
@@ -465,9 +567,9 @@
     <widget class="QPushButton" name="pushButtonStopRev">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>78</x>
        <y>40</y>
-       <width>95</width>
+       <width>81</width>
        <height>23</height>
       </rect>
      </property>
@@ -478,9 +580,9 @@
     <widget class="QPushButton" name="pushButtonSaveRev">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>78</x>
        <y>20</y>
-       <width>95</width>
+       <width>81</width>
        <height>23</height>
       </rect>
      </property>
@@ -492,10 +594,10 @@
    <widget class="QGroupBox" name="groupBoxSend">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>388</y>
-      <width>541</width>
-      <height>141</height>
+      <x>190</x>
+      <y>392</y>
+      <width>531</width>
+      <height>121</height>
      </rect>
     </property>
     <property name="title">
@@ -507,9 +609,9 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>521</width>
+       <x>0</x>
+       <y>10</y>
+       <width>541</width>
        <height>111</height>
       </rect>
      </property>
@@ -520,10 +622,10 @@
     <widget class="QPushButton" name="pushButtonSend">
      <property name="geometry">
       <rect>
-       <x>460</x>
-       <y>110</y>
-       <width>71</width>
-       <height>23</height>
+       <x>500</x>
+       <y>100</y>
+       <width>31</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
@@ -564,6 +666,9 @@
        <height>331</height>
       </rect>
      </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>
@@ -583,6 +688,9 @@
     </property>
     <property name="text">
      <string>多行发送</string>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QGroupBox" name="groupBoxMutiSend">
@@ -1082,6 +1190,652 @@
      </property>
     </widget>
    </widget>
+   <widget class="QPushButton" name="pushButton_RYISP">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>370</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>STM32下载</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_EraseAll">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>690</y>
+      <width>113</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>EraseAll</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_WriteBin">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>650</y>
+      <width>113</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>WriteBin</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_HexToBin">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>690</y>
+      <width>113</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>HexToBin</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_OpenBin">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>370</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Open</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditMuti_FileName">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>370</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditMuti_binaddr">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>370</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>0x08000000</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="progressBar">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>370</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="tabletTracking">
+     <bool>false</bool>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::DefaultContextMenu</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="textVisible">
+     <bool>true</bool>
+    </property>
+    <property name="invertedAppearance">
+     <bool>false</bool>
+    </property>
+    <property name="textDirection">
+     <enum>QProgressBar::TopToBottom</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Ymodem">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>700</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ymodem</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>320</y>
+      <width>171</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>STM32下载设置</string>
+    </property>
+    <widget class="QRadioButton" name="radioButton_EraseALL">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>全擦除</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButton_NotErase">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>20</y>
+       <width>61</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>不擦除</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton_ESP32ISP">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>370</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ESP32下载</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_esp32">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>560</y>
+      <width>531</width>
+      <height>120</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>ESP32下载设置</string>
+    </property>
+    <widget class="QPushButton" name="pushButton_Open_BOOT_Combine">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>20</y>
+       <width>71</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>打开BOOT</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Open_PART">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>40</y>
+       <width>71</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>打开PART</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Open_APP">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>60</y>
+       <width>71</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>打开APP</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_BOOT_Combine">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>20</y>
+       <width>171</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>选择bootlaoder.bin</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_PART">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>40</y>
+       <width>171</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>选择partition-table.bin</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_APP">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>60</y>
+       <width>171</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>选择app.bin</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxCheck_ESP32">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="currentIndex">
+      <number>4</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>ESP8266</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ESP32</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ESP32S2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ESP32C3</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ESP32S3</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ESP32C2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ESP32H2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ESP32C6</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QRadioButton" name="radioButton_combine">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>CombineBin</string>
+     </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_BOOT_Combine">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>20</y>
+       <width>91</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>@ Ox0</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_PART">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>40</y>
+       <width>91</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>@ Ox8000</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_APP">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>60</y>
+       <width>91</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>@ Ox10000</string>
+     </property>
+    </widget>
+    <widget class="QProgressBar" name="progressBar_BOOT_Combine">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>20</y>
+       <width>171</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
+     <property name="tabletTracking">
+      <bool>false</bool>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::DefaultContextMenu</enum>
+     </property>
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="textVisible">
+      <bool>true</bool>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+     <property name="textDirection">
+      <enum>QProgressBar::TopToBottom</enum>
+     </property>
+    </widget>
+    <widget class="QProgressBar" name="progressBar_PART">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>40</y>
+       <width>171</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
+     <property name="tabletTracking">
+      <bool>false</bool>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::DefaultContextMenu</enum>
+     </property>
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="textVisible">
+      <bool>true</bool>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+     <property name="textDirection">
+      <enum>QProgressBar::TopToBottom</enum>
+     </property>
+    </widget>
+    <widget class="QProgressBar" name="progressBar_APP">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>60</y>
+       <width>171</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
+     <property name="tabletTracking">
+      <bool>false</bool>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::DefaultContextMenu</enum>
+     </property>
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="textVisible">
+      <bool>true</bool>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+     <property name="textDirection">
+      <enum>QProgressBar::TopToBottom</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_ESP32_START">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>90</y>
+       <width>71</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>启动下载</string>
+     </property>
+    </widget>
+   </widget>
+   <zorder>pushButton_EraseAll</zorder>
    <zorder>labelMS</zorder>
    <zorder>checkBoxPeriodicSend</zorder>
    <zorder>groupBoxComSet</zorder>
@@ -1092,14 +1846,25 @@
    <zorder>radioButton</zorder>
    <zorder>groupBoxMutiSend</zorder>
    <zorder>lineEditTime</zorder>
+   <zorder>pushButton_RYISP</zorder>
+   <zorder>pushButton_WriteBin</zorder>
+   <zorder>pushButton_HexToBin</zorder>
+   <zorder>pushButton_OpenBin</zorder>
+   <zorder>lineEditMuti_FileName</zorder>
+   <zorder>lineEditMuti_binaddr</zorder>
+   <zorder>progressBar</zorder>
+   <zorder>pushButton_Ymodem</zorder>
+   <zorder>groupBox_3</zorder>
+   <zorder>pushButton_ESP32ISP</zorder>
+   <zorder>groupBox_esp32</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>729</width>
-     <height>23</height>
+     <width>728</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

@@ -2,8 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QSerialPort>
-#include <QSerialPortInfo>
 #include <QMessageBox>
 #include <QString>
 #include <QTimer>
@@ -13,6 +11,19 @@
 #include <QTextCodec>
 #include <QScreen>
 
+#include <ryisp.h>
+#include <mycom.h>
+#include <HexToBin.h>
+#include <ry_ymodem.h>
+#include <myfilewatcher.h>
+#include <ryesp32isp.h>
+
+#include"QDebug"
+#include"QObject"
+
+#include <QFileInfo>
+
+extern QSerialPort MyCom;//串口对象，项目中唯一的串口对象
 
 namespace Ui {
 class MainWindow;
@@ -30,6 +41,9 @@ private slots:
 
     void MyComRevSlot();//串口接收槽函数
     void portRecvDataDelay();// 串口接收数据延时
+
+    void SLOT_baudIndexChanged(int baudIndex);//波特率选择为自定义时
+    //void SLOT_baudChanged(QString baudText);//获取自定义波特率
 
     void on_radioButton_clicked();//显示多行发送界面
 
@@ -61,13 +75,52 @@ private slots:
 
     void on_pushButtonMutiReset_clicked();//清除多行文本
 
+    void on_pushButton_EraseAll_clicked();
+
+    void on_pushButton_WriteBin_clicked();
+
+    void on_pushButton_OpenBin_clicked();
+
+    //
+    void on_pushButton_ESP32ISP_clicked();
+
+    char  OpenMyFile();
+    void GetFileName();
+    //void OpenESP32bin(uint8_t flag);
+    void SetESP32LineEditText(location_code_t location);
+
+    char ESP32BinProcess();
+    char OpenESP32bin(QByteArray *bindata,location_code_t location);
+    void PrintChipInfo();
+    //获取程序首地址
+    int GetProgramBeginAddr();
+
+    void on_pushButton_RYISP_clicked();
+
+    void on_pushButton_Ymodem_clicked();
+    //文件更新槽函数
+    //void MyFileUpdated();
+
+    void on_radioButton_combine_clicked();
+
+
+    void on_pushButton_Open_BOOT_Combine_clicked();
+
+    void on_pushButton_Open_PART_clicked();
+
+    void on_pushButton_Open_APP_clicked();
+
+    void on_pushButton_ESP32_START_clicked();
+
+    void on_comboBoxCheck_ESP32_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
 
     //添加自定义变量
-    QSerialPort MyCom;//串口对象，项目中唯一的串口对象
+    //QSerialPort MyCom;//串口对象，项目中唯一的串口对象
     long ComSendSum,ComRevSum;//发送和接收流量统计变量
-
+    unsigned char wirtedata[10] = {1,2,3,4,5,6,7,8,9,10};
     bool StopDis = false;//停止显示标识
     bool TimeDateDisp = false;//显示时间标志
     bool MutiState[10];//多行选中状态
@@ -77,6 +130,11 @@ private:
     QTimer *recvDelayTimer;//接收延时定时器，解决中文分段乱码
 
     QDateTime curDateTime;//系统时间变量
+    //QFileSystemWatcher* my_watcher;//文件监控对象
+
+    //定时器用于监控文件变化
+    QTimer *FileChanged;
+    QDateTime lastmodified;//存储文件前一次更新时间
 
     //下列标签将显示在状态栏
     QLabel *qlbSendSum,*qlbRevSum;//发送接收流量label对象
@@ -89,6 +147,8 @@ private:
     void SendDataByNoOfEditLineNo(int EditLineNo);//根据状态,发送指定行的数据
     void time_update(); //时间更新槽函数，状态栏显示时间
 
+    void timer_FileChanged();//用于监控文件更改
+
     void setNumOnLabel(QLabel *lbl, QString strS, long num);//设置标签内容
 
     //文件打开、保存、编码转换函数
@@ -100,6 +160,19 @@ private:
     void refreshDPI();//刷新界面
     QScreen* screen;
     double myobjectRate;//dpi比例，用于调整主窗口的大小
+    char ISisping;//1：表示正在进行STM32程序下载，2：表示正在进行ESP32程序下载
+
+    uint32_t ESP32_loader_daud;//临时存储ESP32下载波特率，用于改变波特率CMD
+    RY_Ymodem ry_ymodem;
+    void PrintFileinfo(void);
+    void ResumeFormISP(void);
+    void ResumeFormESP32ISP(void);
+    esp_loader_error_t esp32_flash_binary(const uint8_t *bin, size_t size, size_t address,location_code_t location);
+
+    QByteArray BOOT_Combine_ByteArray;//存储ESP32 bootloader.bin或者Combine.bin
+    QByteArray PART_ByteArray;//存储ESP32 partition-table.bin
+    QByteArray APP_ByteArray;//存储ESP32 app.bin
+
 };
 
 #endif // MAINWINDOW_H

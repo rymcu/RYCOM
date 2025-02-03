@@ -2,7 +2,19 @@
 
 RYCOM是一款开源的串口调试助手，使用QT设计，C++编写，可在Windows、Linux、MacOS操作系统上使用。支持STM32串口下载程序。
 # RYCOM
+ #### 20250202 RYCOM 2.6.0.exe
+
+- 1.添加ESP32系列芯片串口下载程序，支持从0x0开始下载合并后的单个.bin;
+- 2.支持bootloader.bin,partition-table.bin,app.bin分段下载;
+- 3.自动识别ESP32芯片信号和flash大小;
+- 4.ESP32串口下载使用方法https://rymcu.com/article/2203
+
+ #### 20240323 RYCOM 2.5.1.exe
+
+- 1.修复重复点击Open按钮卡死bug。
+
  #### 20240320 RYCOM2.5.exe
+
 - 1.增加串口下载Flash擦除选项;
 - 2.修复.Hex文件打开时下载地址错误;
 - 3.修复指示灯bug及其他。
