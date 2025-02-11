@@ -171,7 +171,9 @@ esp_loader_error_t loader_flash_begin_cmd(uint32_t offset, uint32_t erase_size, 
         .common = {
             .direction = WRITE_DIRECTION,
             .command = FLASH_BEGIN,
-            .size = CMD_SIZE(flash_begin_cmd) - (encryption ? 0 : sizeof(uint32_t)),
+            //.size = CMD_SIZE(flash_begin_cmd) - (encryption ? 0 : sizeof(uint32_t)),
+            //for mac
+            .size = (uint16_t)(CMD_SIZE(flash_begin_cmd) - (encryption ? 0 : sizeof(uint32_t))),
             .checksum = 0
         },
         .erase_size = erase_size,
@@ -529,7 +531,9 @@ esp_loader_error_t loader_flash_data_cmd(const uint8_t *data, uint32_t size)
         .common = {
             .direction = WRITE_DIRECTION,
             .command = FLASH_DATA,
-            .size = CMD_SIZE(data_cmd) + size,
+            //.size = CMD_SIZE(data_cmd) + size,
+            //for mac
+            .size = uint16_t(CMD_SIZE(data_cmd) + size),
             .checksum = compute_checksum(data, size)
         },
         .data_size = size,

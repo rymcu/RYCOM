@@ -228,20 +228,20 @@ public:
         groupBoxSendSet->setGeometry(QRect(10, 390, 171, 121));
         pushButtonClearSend = new QPushButton(groupBoxSendSet);
         pushButtonClearSend->setObjectName(QStringLiteral("pushButtonClearSend"));
-        pushButtonClearSend->setGeometry(QRect(78, 30, 81, 23));
+        pushButtonClearSend->setGeometry(QRect(68, 30, 91, 23));
         pushButtonRdFile = new QPushButton(groupBoxSendSet);
         pushButtonRdFile->setObjectName(QStringLiteral("pushButtonRdFile"));
-        pushButtonRdFile->setGeometry(QRect(78, 10, 81, 23));
+        pushButtonRdFile->setGeometry(QRect(68, 10, 91, 23));
         checkBoxSendHex = new QCheckBox(groupBoxSendSet);
         checkBoxSendHex->setObjectName(QStringLiteral("checkBoxSendHex"));
-        checkBoxSendHex->setGeometry(QRect(80, 60, 71, 16));
+        checkBoxSendHex->setGeometry(QRect(70, 60, 81, 16));
         checkBoxAddNewShift = new QCheckBox(groupBoxSendSet);
         checkBoxAddNewShift->setObjectName(QStringLiteral("checkBoxAddNewShift"));
-        checkBoxAddNewShift->setGeometry(QRect(80, 80, 71, 16));
+        checkBoxAddNewShift->setGeometry(QRect(70, 80, 81, 16));
         checkBoxAddNewShift->setCheckable(true);
         checkBoxAutoDownload = new QCheckBox(groupBoxSendSet);
         checkBoxAutoDownload->setObjectName(QStringLiteral("checkBoxAutoDownload"));
-        checkBoxAutoDownload->setGeometry(QRect(80, 100, 101, 16));
+        checkBoxAutoDownload->setGeometry(QRect(70, 100, 101, 16));
         groupBoxRevSet = new QGroupBox(centralWidget);
         groupBoxRevSet->setObjectName(QStringLiteral("groupBoxRevSet"));
         groupBoxRevSet->setGeometry(QRect(10, 190, 171, 131));
@@ -269,7 +269,7 @@ public:
         TextSend = new QPlainTextEdit(groupBoxSend);
         TextSend->setObjectName(QStringLiteral("TextSend"));
         TextSend->setEnabled(true);
-        TextSend->setGeometry(QRect(0, 10, 541, 111));
+        TextSend->setGeometry(QRect(0, 20, 541, 111));
         pushButtonSend = new QPushButton(groupBoxSend);
         pushButtonSend->setObjectName(QStringLiteral("pushButtonSend"));
         pushButtonSend->setGeometry(QRect(500, 100, 31, 21));
@@ -406,7 +406,7 @@ public:
         pushButton_RYISP = new QPushButton(centralWidget);
         pushButton_RYISP->setObjectName(QStringLiteral("pushButton_RYISP"));
         pushButton_RYISP->setEnabled(false);
-        pushButton_RYISP->setGeometry(QRect(330, 370, 71, 21));
+        pushButton_RYISP->setGeometry(QRect(340, 370, 71, 21));
         pushButton_RYISP->setAutoDefault(false);
         pushButton_EraseAll = new QPushButton(centralWidget);
         pushButton_EraseAll->setObjectName(QStringLiteral("pushButton_EraseAll"));
@@ -467,7 +467,7 @@ public:
         pushButton_ESP32ISP = new QPushButton(centralWidget);
         pushButton_ESP32ISP->setObjectName(QStringLiteral("pushButton_ESP32ISP"));
         pushButton_ESP32ISP->setEnabled(false);
-        pushButton_ESP32ISP->setGeometry(QRect(400, 370, 71, 21));
+        pushButton_ESP32ISP->setGeometry(QRect(420, 370, 71, 21));
         pushButton_ESP32ISP->setAutoDefault(false);
         groupBox_esp32 = new QGroupBox(centralWidget);
         groupBox_esp32->setObjectName(QStringLiteral("groupBox_esp32"));
@@ -586,7 +586,7 @@ public:
         groupBox_esp32->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 728, 26));
+        menuBar->setGeometry(QRect(0, 0, 728, 36));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -602,9 +602,9 @@ public:
         comboBoxData->setCurrentIndex(3);
         comboBoxComBaud->setCurrentIndex(0);
         pushButtonSend->setDefault(false);
-        pushButton_RYISP->setDefault(true);
+        pushButton_RYISP->setDefault(false);
         pushButton_Ymodem->setDefault(true);
-        pushButton_ESP32ISP->setDefault(true);
+        pushButton_ESP32ISP->setDefault(false);
         comboBoxCheck_ESP32->setCurrentIndex(4);
 
 

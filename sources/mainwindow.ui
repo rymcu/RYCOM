@@ -438,9 +438,9 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
     <widget class="QPushButton" name="pushButtonClearSend">
      <property name="geometry">
       <rect>
-       <x>78</x>
+       <x>68</x>
        <y>30</y>
-       <width>81</width>
+       <width>91</width>
        <height>23</height>
       </rect>
      </property>
@@ -451,9 +451,9 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
     <widget class="QPushButton" name="pushButtonRdFile">
      <property name="geometry">
       <rect>
-       <x>78</x>
+       <x>68</x>
        <y>10</y>
-       <width>81</width>
+       <width>91</width>
        <height>23</height>
       </rect>
      </property>
@@ -464,9 +464,9 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
     <widget class="QCheckBox" name="checkBoxSendHex">
      <property name="geometry">
       <rect>
-       <x>80</x>
+       <x>70</x>
        <y>60</y>
-       <width>71</width>
+       <width>81</width>
        <height>16</height>
       </rect>
      </property>
@@ -477,9 +477,9 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
     <widget class="QCheckBox" name="checkBoxAddNewShift">
      <property name="geometry">
       <rect>
-       <x>80</x>
+       <x>70</x>
        <y>80</y>
-       <width>71</width>
+       <width>81</width>
        <height>16</height>
       </rect>
      </property>
@@ -493,7 +493,7 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
     <widget class="QCheckBox" name="checkBoxAutoDownload">
      <property name="geometry">
       <rect>
-       <x>80</x>
+       <x>70</x>
        <y>100</y>
        <width>101</width>
        <height>16</height>
@@ -610,7 +610,7 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>10</y>
+       <y>20</y>
        <width>541</width>
        <height>111</height>
       </rect>
@@ -1196,7 +1196,7 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>340</x>
       <y>370</y>
       <width>71</width>
       <height>21</height>
@@ -1209,7 +1209,7 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
      <bool>false</bool>
     </property>
     <property name="default">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_EraseAll">
@@ -1422,7 +1422,7 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>420</x>
       <y>370</y>
       <width>71</width>
       <height>21</height>
@@ -1435,7 +1435,7 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
      <bool>false</bool>
     </property>
     <property name="default">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QGroupBox" name="groupBox_esp32">
@@ -1864,7 +1864,7 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
      <x>0</x>
      <y>0</y>
      <width>728</width>
-     <height>26</height>
+     <height>36</height>
     </rect>
    </property>
   </widget>

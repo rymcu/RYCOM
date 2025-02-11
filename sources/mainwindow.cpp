@@ -1144,8 +1144,8 @@ void MainWindow::refreshDPI()
     QScreen* screen = screens[0];
     qreal dpi = screen->logicalDotsPerInch();
 
-    //计算dpi对应的缩放比例
-    double objectRate = dpi/96.0;//72
+    //计算dpi对应的缩放比例,96win,72mac
+    double objectRate = dpi/72.0;//72
     myobjectRate=objectRate;
     changeObjectSize(*this, objectRate);
     resize(width()*objectRate,height()*objectRate);
@@ -1658,7 +1658,7 @@ void MainWindow::SLOT_baudIndexChanged(int baudIndex)//波特率选择为自定�
     {
         QLineEdit *lineEdit = new QLineEdit(this);
         lineEdit->setFocus();
-         QTimer::singleShot(0,lineEdit,lineEdit->selectAll);
+         //QTimer::singleShot(0,lineEdit,lineEdit->selectAll);
         ui->comboBoxComBaud->setLineEdit(lineEdit);
     }
     else
