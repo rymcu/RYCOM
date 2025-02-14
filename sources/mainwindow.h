@@ -115,6 +115,8 @@ private slots:
 
     void on_comboBoxCheck_ESP32_currentIndexChanged(int index);
 
+    void on_pushButton_STM32_START_clicked();
+
 private:
     Ui::MainWindow *ui;
 

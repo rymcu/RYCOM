@@ -618,12 +618,17 @@ RYCOM.app/Contents/Resources/empty.lproj:
 RYCOM.app/Contents/Info.plist: 
 	@test -d RYCOM.app/Contents || mkdir -p RYCOM.app/Contents
 	@$(DEL_FILE) RYCOM.app/Contents/Info.plist
-	@sed -e "s,@SHORT_VERSION@,1.0,g" -e "s,@FULL_VERSION@,1.0.0,g" -e "s,@TYPEINFO@,????,g" -e "s,@BUNDLEIDENTIFIER@,com.yourcompany.RYCOM,g" -e "s,@ICON@,,g" -e "s,@EXECUTABLE@,RYCOM,g" -e "s,@LIBRARY@,RYCOM,g" -e "s,@TYPEINFO@,????,g" ../../../../Qt5.9.0/5.9/clang_64/mkspecs/macx-clang/Info.plist.app >RYCOM.app/Contents/Info.plist
+	@sed -e "s,@SHORT_VERSION@,1.0,g" -e "s,@FULL_VERSION@,1.0.0,g" -e "s,@TYPEINFO@,????,g" -e "s,@BUNDLEIDENTIFIER@,com.yourcompany.RYCOM,g" -e "s,@ICON@,rymculogo.icns,g" -e "s,@EXECUTABLE@,RYCOM,g" -e "s,@LIBRARY@,RYCOM,g" -e "s,@TYPEINFO@,????,g" ../../../../Qt5.9.0/5.9/clang_64/mkspecs/macx-clang/Info.plist.app >RYCOM.app/Contents/Info.plist
+RYCOM.app/Contents/Resources/rymculogo.icns: rymculogo.icns
+	@test -d RYCOM.app/Contents/Resources/ || mkdir -p RYCOM.app/Contents/Resources/
+	@$(DEL_FILE) RYCOM.app/Contents/Resources/rymculogo.icns
+	@$(COPY_FILE) rymculogo.icns RYCOM.app/Contents/Resources/rymculogo.icns
 
 all: Makefile \
 		RYCOM.app/Contents/PkgInfo \
 		RYCOM.app/Contents/Resources/empty.lproj \
-		RYCOM.app/Contents/Info.plist $(TARGET)
+		RYCOM.app/Contents/Info.plist \
+		RYCOM.app/Contents/Resources/rymculogo.icns $(TARGET)
 
 dist: distdir FORCE
 	(cd `dirname $(DISTDIR)` && $(TAR) $(DISTNAME).tar $(DISTNAME) && $(COMPRESS) $(DISTNAME).tar) && $(MOVE) `dirname $(DISTDIR)`/$(DISTNAME).tar.gz . && $(DEL_FILE) -r $(DISTDIR)

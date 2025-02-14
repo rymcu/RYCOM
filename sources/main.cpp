@@ -1,10 +1,12 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <ryisp.h>
+#include <QStyleFactory>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setStyle(QStyleFactory::create("Fusion"));  // 使用 Fusion 样式,for mac 解决MAC下进度条不显示百分比问题
     MainWindow w;
     w.show();
 
@@ -13,6 +15,16 @@ int main(int argc, char *argv[])
 
 /************************************************
  ********************版本说明*********************
+ * 20250214 RYCOM 2.6.1.exe
+ * 1.修复MAC下进度条不显示百分比bug
+ * 2.修复STM32串口下载期间，接收区继续显示串口数据bug
+ * 3.STM32下载时文件选择模式改成与ESP32一致
+ * 4.ESP32下载握手失败时，增加处理措施具体步骤
+ * 5.添加MAC版本图标
+ * 6.ESP32下载文件选择框记录历史路径
+ * 7.完善按钮文字显示,界面文字，界面布局局部调整等
+ * 8.今天情人节，写个毛的代码
+ *
  * 20250202 RYCOM 2.6.0.exe
  * 1.添加ESP32系列芯片串口下载程序，支持从0x0开始下载合并后的单个.bin
  * 2.支持bootloader.bin,partition-table.bin,app.bin分段下载

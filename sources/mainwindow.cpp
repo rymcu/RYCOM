@@ -91,7 +91,7 @@ MainWindow::MainWindow(QWidget *parent) :
          qlbLinkRYMCU->setOpenExternalLinks(true);//状态栏显示官网、源码链接
          qlbLinkRYMCU->setText("<style> a {text-decoration: none} </style> <a href=\"https://rymcu.com\">--RYMCU官网--");// 无下划线
          qlbLinkSource->setOpenExternalLinks(true);
-         qlbLinkSource->setText("<style> a {text-decoration: none} </style> <a href=\"https://github.com/rymcu/RYCOM\">--助手源代码V2.6.0--");// 无下划线
+         qlbLinkSource->setText("<style> a {text-decoration: none} </style> <a href=\"https://github.com/rymcu/RYCOM\">--助手源代码V2.6.1--");// 无下划线
          //隐藏进度条
          ui->progressBar->setVisible(false);
          //串口指示灯设置为只读控件，屏蔽鼠标点击事件
@@ -172,8 +172,8 @@ void MainWindow::MyComRevSlot()
     curDateTime = QDateTime::currentDateTime();
     StrTimeDate = curDateTime.toString("[yyyy-MM-dd hh:mm:ss.zzz] ");
 
-    //ISP期间不显示接收时间
-    //if(ISisping) return;
+    //stm32 ISP期间不显示接收数据
+    if(ISisping == 1) return;
 
     //开始显示数据，显示模式包括：是否16进制，是否显示接收时间
     if(ui->checkBoxRevHex->checkState() == false)//正常文本显示
@@ -1192,7 +1192,8 @@ void MainWindow::ResumeFormISP(void)
 {
     ui->groupBoxRev->setTitle("接收区");
     ISisping = 0;
-    ui->progressBar->setVisible(false);//隐藏进度条
+    //ui->progressBar->setVisible(false);//隐藏进度条
+    on_pushButton_RYISP_clicked();//推出了隐藏下载框
     on_pushButtonOpen_clicked();//重启串口，复位CH343P状态，保证能正常下载
     on_pushButtonOpen_clicked();
 }
@@ -1206,6 +1207,24 @@ void MainWindow::ResumeFormESP32ISP(void)
     on_pushButtonOpen_clicked();//重启串口，复位CH343P状态，保证能正常下载
     on_pushButtonOpen_clicked();
 }
+void MainWindow::on_pushButton_RYISP_clicked()
+{
+    static uint8_t flag_stm32 = 0;
+    ui->progressBar->setVisible(false);//隐藏进度条
+    flag_stm32++;
+    if(flag_stm32%2)
+    {
+        ui->groupBox_stm32->move(190*myobjectRate,395*myobjectRate);
+        ui->groupBoxSend->hide();
+    }
+    else
+    {
+        ui->groupBox_stm32->move(190*myobjectRate,720*myobjectRate);
+        ui->groupBoxSend->show();
+    }
+    ui->groupBox_esp32->move(190*myobjectRate,596*myobjectRate);//显示STM32下载框时，确保ESP32框不可见
+}
+
 /***********************************************************
 * 启动串口ISP
 * step1 串口设置为Even校验，并打开后，启动串口ISP按钮有效
@@ -1222,7 +1241,7 @@ void MainWindow::ResumeFormESP32ISP(void)
 * step10 下载完完成，隐藏进度条，并跳转至程序开始处执行。
 * step11 结束。
 ***********************************************************/
-void MainWindow::on_pushButton_RYISP_clicked()
+void MainWindow::on_pushButton_STM32_START_clicked()
 {
      char error;
 
@@ -1363,6 +1382,9 @@ ui->TextRev->insertPlainText(CharToHex((char *)dataflash,4));//显示数据
 
    //开始下载程序
     ui->progressBar->setVisible(true);//显示进度条
+    //ui->progressBar->setMinimumSize(200, 20);  // 宽度足够显示文本
+    ui->progressBar->setTextVisible(true);
+    ui->progressBar->setFormat("%p%");
    on_pushButton_WriteBin_clicked();
    //状态恢复
    ResumeFormISP();
@@ -1692,6 +1714,10 @@ void MainWindow::on_pushButton_ESP32ISP_clicked()
     ui->progressBar_BOOT_Combine->setVisible(false);//隐藏进度条
     ui->progressBar_PART->setVisible(false);
     ui->progressBar_APP->setVisible(false);
+    //隐藏文件输入框
+    ui->lineEdit_BOOT_Combine->setVisible(true);
+    ui->lineEdit_APP->setVisible(true);
+     ui->lineEdit_PART->setVisible(true);
     flag++;
     if(flag%2)
     {
@@ -1703,6 +1729,7 @@ void MainWindow::on_pushButton_ESP32ISP_clicked()
         ui->groupBox_esp32->move(190*myobjectRate,596*myobjectRate);
         ui->groupBoxSend->show();
     }
+    ui->groupBox_stm32->move(190*myobjectRate,720*myobjectRate);//显示ESP32下载框时，确保STM32框不可见
 }
 
 void MainWindow::on_radioButton_combine_clicked()
@@ -1712,7 +1739,7 @@ void MainWindow::on_radioButton_combine_clicked()
     {
         temp = ui->label_BOOT_Combine->text();
 
-       ui->pushButton_Open_BOOT_Combine->setText("Combine");
+       ui->pushButton_Open_BOOT_Combine->setText("合并的.bin");
        ui->lineEdit_BOOT_Combine->setPlaceholderText("选择合并后的.bin"); // 设置占位符文本
        ui->label_BOOT_Combine->setText("@ 0x0");
 
@@ -1834,8 +1861,8 @@ void MainWindow::on_pushButton_ESP32_START_clicked()
         delay_msec(300);
         if(StartTimes==1)
         {
-          QMessageBox::critical(this, "提示", "进入ESP32 bootloader失败.\r\n请确认已进入下载模式!\r\n");
-          ui->TextRev->insertPlainText("\r\n进入bootloader：失败!");
+          QMessageBox::critical(this, "提示", "进入bootloader模式失败,请确认已进入下载模式!\r\n操作方法如下:\r\n\r\n  1)按住boot，按一下RST按键，松开boot\r\n  2)RYCOM上重新打开串口\r\n  3)选择文件，进入下载流程");
+          ui->TextRev->insertPlainText("\r\n进入bootloader：失败,请确认已进入下载模式!\r\n操作方法如下:\r\n\r\n  1)按住boot，按一下RST按键，松开boot\r\n  2)RYCOM上重新打开串口\r\n  3)选择文件，进入下载流程\r\n\r\n");
           ResumeFormESP32ISP();
           return;
         }
@@ -1974,18 +2001,30 @@ esp_loader_error_t MainWindow::esp32_flash_binary(const uint8_t *bin, size_t siz
     switch (location) {
     case BOOT_COMBIN:
         ui->progressBar_BOOT_Combine->setVisible(true);
+        ui->progressBar_BOOT_Combine->setTextVisible(true);
+        ui->progressBar_BOOT_Combine->setFormat("%p%");
         ui->progressBar_BOOT_Combine->setMaximum(binary_size);
         ui->progressBar_BOOT_Combine->setValue(written);
+        //隐藏文件输入框
+        ui->lineEdit_BOOT_Combine->setVisible(false);
         break;
     case PART:
         ui->progressBar_PART->setVisible(true);
+        ui->progressBar_PART->setTextVisible(true);
+        ui->progressBar_PART->setFormat("%p%");
         ui->progressBar_PART->setMaximum(binary_size);
-        ui->progressBar_PART->setValue(written);
+        ui->progressBar_PART->setValue(written);       
+        //隐藏文件输入框
+        ui->lineEdit_PART->setVisible(false);
         break;
     case APP:
         ui->progressBar_APP->setVisible(true);
+        ui->progressBar_APP->setTextVisible(true);
+        ui->progressBar_APP->setFormat("%p%");
         ui->progressBar_APP->setMaximum(binary_size);
         ui->progressBar_APP->setValue(written);
+        //隐藏文件输入框
+        ui->lineEdit_APP->setVisible(false);
         break;
     default:
         break;

@@ -14,12 +14,12 @@ uint8_t Uart_read(QByteArray *data,command_t command)
 {
     if(command != SYNC) //同步指令不需要等待
     {
-        if(false == MyCom.waitForReadyRead(30000)) return 1;//30s还么收到数据，认为有问题//函数目的：擦除需要时间，30s应该足够了
+        if(false == MyCom.waitForReadyRead(8000)) return 1;//8s还么收到数据，认为有问题//函数目的：擦除需要时间，8s应该足够了
         delay_msec(1);
     }
     else
     {
-        delay_msec(100);//延时10ms,等待数据接收完成,同步指令返回数据较多
+        delay_msec(10);//延时10ms,等待数据接收完成,同步指令返回数据较多
     }
 
     if(MyCom.bytesAvailable()>=MIN_RESP_DATA_SIZE)
