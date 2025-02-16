@@ -1263,7 +1263,7 @@ void MainWindow::on_pushButton_STM32_START_clicked()
      error = OpenMyFile();
      if(!error)
      {
-         QMessageBox::critical(this, "提示", "文件打开失败!");
+         QMessageBox::critical(this, "提示", "STM32文件打开失败!");
           ResumeFormISP();
          return;
      }
@@ -1395,6 +1395,37 @@ ui->TextRev->insertPlainText(CharToHex((char *)dataflash,4));//显示数据
 void MainWindow::GetFileName()
 {
     //写文件
+     QString dlgTitle="打开一个文件"; //对话框标题
+     QString filter="(*.hex *.bin)"; //文件过滤器
+     //添加打开路径保留功能
+      QSettings settings("RYMCU", "RYCOM");
+      // 从 QSettings 中读取上一次的路径，如果没有则使用当前目录
+     QString lastPath = settings.value("lastFilePath", QDir::currentPath()).toString();
+     QString aFileName=QFileDialog::getOpenFileName(NULL,dlgTitle,lastPath,filter);
+     if (aFileName.isEmpty())
+     {
+          QMessageBox::critical(this, "提示", "STM32文件为空！");
+          return;
+     }
+     else
+     {
+         ui->lineEditMuti_FileName->setText(aFileName);
+         QFileInfo fileinfo(ui->lineEditMuti_FileName->text());//获取当前文件的最新修改时间
+         lastmodified = fileinfo.lastModified();
+
+         //if(ui->checkBoxAutoDownload->checkState() != false)//判断是否使能自动下载更能
+         //{
+             //if(!my_watcher->files().isEmpty()) my_watcher->removePath(ui->lineEditMuti_FileName->text());
+             //my_watcher->addPath(ui->lineEditMuti_FileName->text());//添加文件监控路径
+         //}
+     }
+     //保存当前路径
+     QFileInfo fileInfo(aFileName);
+     QString dirPath = fileInfo.absolutePath();
+     // 将当前选择的文件所在目录保存到 QSettings 中
+     settings.setValue("lastFilePath", dirPath);
+     /*
+     //写文件
      QString curPath=QDir::currentPath();//获取系统当前目录
      QString dlgTitle="打开一个文件"; //对话框标题
      //QString filter="(*.hex);;(*.bin);;所有文件(*.*)"; //文件过滤器
@@ -1418,6 +1449,7 @@ void MainWindow::GetFileName()
         QMessageBox::critical(this, "提示", "文件为空！");
     }
     //测试Qfileinfo
+    */
 
 }
 /***********************************************************
@@ -1435,20 +1467,26 @@ char MainWindow:: OpenMyFile()
     text.clear();
     aFileName = ui->lineEditMuti_FileName->text();
 
-     if (aFileName.isEmpty()) return 0;
+     if (aFileName.isEmpty())
+     {
+         myDebug()<<"aFileName.isEmpty()";
+         return 0;
+     }
 
      if(aFileName.contains(".hex"))
      {
-         QByteArray ba = aFileName.toLatin1();
+         QByteArray ba = aFileName.toUtf8();//QByteArray ba = aFileName.toLatin1();
          char *c_str = ba.data();
          text.clear();
-
          //RESULT_STATUS res = HexFile2BinFile(c_str, "/") ;
          //if(res != RES_OK) return;
          //unsigned int addr;
          if(HexFile2BinFile(c_str, "/",&ISPBeginAddr) == RES_OK)
-             //ISPBeginAddr = GetProgramBeginAddr(); /////////////////////////////////////////////
+             //ISPBeginAddr = GetProgramBeginAddr(); /////////////////////////////////////////////             
+         {
+             myDebug()<<"HexFile2BinFile errer";
              return 0;
+         }
      }
 
     else if(aFileName.contains(".bin"))
@@ -1468,6 +1506,7 @@ char MainWindow:: OpenMyFile()
      if(text.isNull())
      {
          //QMessageBox::critical(this, "提示", "Open a .bin or .hex file!");
+          myDebug()<<"text.isNull()";
          return 0;
 
      }
