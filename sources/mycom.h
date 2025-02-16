@@ -12,6 +12,6 @@
 extern QSerialPort MyCom;//串口对象，项目中唯一的串口对象
 extern QByteArray MyComRevBUff;//串口接收数据缓存
 
-extern void delay_msec(int msec);//非阻塞延时函数
-
+extern void delay_msec(int msec);//非阻塞毫秒延时函数
+void delay_usec(qint64 usec);//非阻塞微妙延时函数
 #endif // MYCOM_H

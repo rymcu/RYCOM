@@ -165,7 +165,6 @@ private:
     double myobjectRate;//dpi比例，用于调整主窗口的大小
     char ISisping;//1：表示正在进行STM32程序下载，2：表示正在进行ESP32程序下载
 
-    uint32_t ESP32_loader_daud;//临时存储ESP32下载波特率，用于改变波特率CMD
     RY_Ymodem ry_ymodem;
     void PrintFileinfo(void);
     void ResumeFormISP(void);

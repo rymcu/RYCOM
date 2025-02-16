@@ -2006,7 +2006,7 @@ esp_loader_error_t MainWindow::esp32_flash_binary(const uint8_t *bin, size_t siz
     if (err != ESP_LOADER_SUCCESS)
     {
       //printf("esp_loader_flash_start fail:%d\n",err);
-      myDebug()<<"esp_loader_flash_start fail";
+      myDebug()<<"esp_loader_flash_start fail"<<err;
       return err;
     }
     //printf("Start programming\n");

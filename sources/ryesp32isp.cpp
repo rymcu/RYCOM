@@ -5,6 +5,8 @@ target_chip_t s_target = ESP_UNKNOWN_CHIP;
 uint8_t DELIMITER = 0xC0;
 uint8_t C0_REPLACEMENT[2] = {0xDB, 0xDC};
 uint8_t DB_REPLACEMENT[2] = {0xDB, 0xDD};
+uint32_t ESP32_loader_daud = 115200;//临时存储ESP32下载波特率，用于改变波特率CMD
+
 
 void Uart_write(uint8_t* data,size_t size)
 {
@@ -14,8 +16,15 @@ uint8_t Uart_read(QByteArray *data,command_t command)
 {
     if(command != SYNC) //同步指令不需要等待
     {
-        if(false == MyCom.waitForReadyRead(8000)) return 1;//8s还没收到数据，认为有问题//函数目的：擦除需要时间，8s应该足够了
-        delay_msec(1);//发现串口有数据后，等待1ms,确保整包数据接收完整(这里采用延时方法接收数据包，做法比较简单但是限制了传输速度，还有优化空间)
+        if(false == MyCom.waitForReadyRead(30000))
+        {
+          myDebug()<<"等待串口数据超时";
+          return 1;//30s还没收到数据，认为有问题//函数目的：擦除需要时间，30s应该足够了
+        }
+        //计算时间10^6us*150/baud
+        qint64 wait_time = 150000000/ESP32_loader_daud;
+        delay_usec(wait_time);
+        //delay_usec(500);//发现串口有数据后，等待500us,确保整包数据接收完整(这里采用延时方法接收数据包，做法比较简单但是限制了传输速度，还有优化空间)
     }
     else
     {
