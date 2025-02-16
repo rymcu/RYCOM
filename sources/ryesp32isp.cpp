@@ -14,18 +14,18 @@ uint8_t Uart_read(QByteArray *data,command_t command)
 {
     if(command != SYNC) //同步指令不需要等待
     {
-        if(false == MyCom.waitForReadyRead(8000)) return 1;//8s还么收到数据，认为有问题//函数目的：擦除需要时间，8s应该足够了
-        delay_msec(1);
+        if(false == MyCom.waitForReadyRead(8000)) return 1;//8s还没收到数据，认为有问题//函数目的：擦除需要时间，8s应该足够了
+        delay_msec(1);//发现串口有数据后，等待1ms,确保整包数据接收完整(这里采用延时方法接收数据包，做法比较简单但是限制了传输速度，还有优化空间)
     }
     else
     {
-        delay_msec(10);//延时10ms,等待数据接收完成,同步指令返回数据较多
+        delay_msec(100);//延时100ms,等待数据接收完成,同步指令返回数据较多
     }
 
     if(MyCom.bytesAvailable()>=MIN_RESP_DATA_SIZE)
     {
         *data = MyCom.readAll();
-        //myDebug() << "data_uart0: " <<data->toHex();
+        myDebug() << "data_uart0: " <<data->toHex();
         return 0;
     }
     return 1;
@@ -576,13 +576,14 @@ esp_loader_error_t esp_loader_flash_write(void *payload, uint32_t size)
     while (padding_bytes--) {
         data[padding_index++] = padding_pattern;
     }
-
-   // unsigned int attempt = 0;
+    #define SERIAL_FLASHER_WRITE_BLOCK_RETRIES 5
+    unsigned int attempt = 0;
     esp_loader_error_t result = ESP_LOADER_ERROR_FAIL;
-    //do {
+    do {
         result = loader_flash_data_cmd(data, s_flash_write_size);
-        //attempt++;
-    //} while (result != ESP_LOADER_SUCCESS && attempt < SERIAL_FLASHER_WRITE_BLOCK_RETRIES);
+        attempt++;
+        myDebug()<<"attempt:"<<attempt;
+    } while (result != ESP_LOADER_SUCCESS && attempt < SERIAL_FLASHER_WRITE_BLOCK_RETRIES);
 
     return result;
 }

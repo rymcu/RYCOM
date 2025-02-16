@@ -1989,6 +1989,7 @@ void MainWindow::on_pushButton_ESP32_START_clicked()
      ui->TextRev->insertPlainText("------------------------下载成功!enjoy!---------------------------\r\n\r\n");
      ResumeFormESP32ISP();
      MyCom.setBaudRate(115200);
+     ui->comboBoxComBaud->setCurrentIndex(0);
      //ISisping = 0;
      ui->TextRev->insertPlainText("串口助手波特率设置为：115200bps,并复位目标芯片(仅对板载自动下载电路有效)!\r\n");
      ui->TextRev->insertPlainText("\r\n------------RYMCU嵌入式知识学习交流平台(rymcu.com)----------------\r\n\r\n");

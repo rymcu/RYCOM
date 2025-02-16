@@ -20,7 +20,7 @@
 #include "esp32/esp32_protocol.h"
 #include <qdebug.h>
 
-//#define QT_DEBUG  //release版本注销，防止调试信息占用资源
+#define QT_DEBUG  //release版本注销，防止调试信息占用资源
 
 #ifdef QT_DEBUG
 #define myDebug() qDebug()
