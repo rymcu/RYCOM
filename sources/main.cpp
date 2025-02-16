@@ -6,12 +6,19 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    a.setStyle(QStyleFactory::create("Fusion"));  // 使用 Fusion 样式,for mac 解决MAC下进度条不显示百分比问题
+    a.setStyle(QStyleFactory::create("Fusion"));  //使用 Fusion 样式,for mac 解决MAC下进度条不显示百分比问题
     MainWindow w;
     w.show();
 
     return a.exec();
 }
+
+/************************************************
+ ********************编译说明*********************
+ * 1. win或MAC下修改对应DPI参数，搜索工程中的PDI参赛初始化(mainwindow.cpp)
+ * 2. release版本注销QT_DEBUG定义(ryesp32isp.h)
+ *
+ ***********************************************/
 
 /************************************************
  ********************版本说明*********************
@@ -23,7 +30,10 @@ int main(int argc, char *argv[])
  * 5.添加MAC版本图标
  * 6.ESP32下载文件选择框记录历史路径
  * 7.完善按钮文字显示,界面文字，界面布局局部调整等
- * 8.今天情人节，写个毛的代码
+ * 8.修复ESP32下载更改波特率下载错误bug
+ * 9.修复ESP32文件框显示/隐藏逻辑错误bug
+ * 10.添加qDebug条件编译选项
+ * 11.今天情人节，写个毛的代码
  *
  * 20250202 RYCOM 2.6.0.exe
  * 1.添加ESP32系列芯片串口下载程序，支持从0x0开始下载合并后的单个.bin

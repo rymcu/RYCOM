@@ -1,5 +1,5 @@
 #include <ryesp32isp.h>
-#include <qdebug.h>
+
 target_registers_t *s_reg = NULL;
 target_chip_t s_target = ESP_UNKNOWN_CHIP;
 uint8_t DELIMITER = 0xC0;
@@ -25,7 +25,7 @@ uint8_t Uart_read(QByteArray *data,command_t command)
     if(MyCom.bytesAvailable()>=MIN_RESP_DATA_SIZE)
     {
         *data = MyCom.readAll();
-        //qDebug() << "data_uart0: " <<data->toHex();
+        //myDebug() << "data_uart0: " <<data->toHex();
         return 0;
     }
     return 1;
@@ -48,7 +48,7 @@ void esp32_enter_bootloader()
     SetRTS(false);
     delay_msec(500);
 
-    MyCom.clear();//再次清空，防止延时期间收到数据干扰，qDebug() << "esp_boot OK";
+    MyCom.clear();//再次清空，防止延时期间收到数据干扰，myDebug() << "esp_boot OK";
 }
 /***********************************************************
  * 下载同步命令
@@ -124,7 +124,7 @@ esp_loader_error_t esp32_loader_detect_chip(target_chip_t *target_chip, target_r
     uint32_t magic_value;
      if(ESP_LOADER_SUCCESS != esp_loader_read_register(CHIP_DETECT_MAGIC_REG_ADDR,  &magic_value))
          return ESP_LOADER_ERROR_INVALID_TARGET;
-     qDebug() << "esp_loader_read_register OK";
+     myDebug() << "esp_loader_read_register OK";
 
     for (int chip = 0; chip < ESP_MAX_CHIP; chip++) {
         for (int index = 0; index < MAX_MAGIC_VALUES; index++) {
@@ -267,7 +267,7 @@ void esp32_laoder_reset_target()
     SetRTS(true);//0
     delay_msec(500);
     SetDTR(false);
-    SetRTS(false);//qDebug() << "esp_reset OK";
+    SetRTS(false);//myDebug() << "esp_reset OK";
 
 }
 /***********************************************************
@@ -284,7 +284,7 @@ esp_loader_error_t SLIP_send( uint8_t *data,size_t size)
     //test-begin
     //for (uint32_t i = 0; i < size; i++)
    // {
-       // qDebug()<<"data:"<<QString::number(data[i], 16).toUpper();
+       // myDebug()<<"data:"<<QString::number(data[i], 16).toUpper();
     //}
     //test-end
     for (uint32_t i = 0; i < size; i++)
@@ -330,12 +330,24 @@ esp_loader_error_t SLIP_receive_packet(uint8_t *buff, size_t *recv_size,command_
     if(Uart_read(&data_uart,command)) return ESP_LOADER_ERROR_INVALID_RESPONSE;//数据接收异常
     size_t data_size = data_uart.size();//串口接收数据大小
     //test
-    //qDebug() << "data_uart: " <<data_uart.toHex();
+    //myDebug() << "data_uart: " <<data_uart.toHex();
 
     if(DELIMITER != (uint8_t)data_uart.at(0)) return ESP_LOADER_ERROR_INVALID_RESPONSE;//数据接收异常
-    //qDebug() << "first 0xC0 ";
-    //过滤开始连续发送2给0xC0的情况
+    //查找字符串中第一个不是0xC0的数，为了解决改变波特率后发送多个0xC0问题
     uint8_t flag_2_0xC0 = 0;
+    for (size_t i = 1; i < data_size; i++)
+    {
+        if(DELIMITER != (uint8_t)data_uart.at(i))
+        {
+             buff[0] = (uint8_t)data_uart.at(i);
+             flag_2_0xC0 = i-1;
+             break;
+        }
+    }
+    //myDebug() << "first 0xC0 ";
+    //过滤开始连续发送2给0xC0的情况
+
+    /*
     if(DELIMITER != (uint8_t)data_uart.at(1))
     {
         buff[0] = (uint8_t)data_uart.at(1);
@@ -346,7 +358,8 @@ esp_loader_error_t SLIP_receive_packet(uint8_t *buff, size_t *recv_size,command_
          buff[0] = (uint8_t)data_uart.at(2);
          flag_2_0xC0 = 1;
     }
-    //qDebug() << "buff[0]=0x:"<<QString::number(buff[0], 16).toUpper();
+    */
+    //myDebug() << "buff[0]=0x:"<<QString::number(buff[0], 16).toUpper();
     uint8_t ch;
     size_t replace_times = 0;
     // Receive either until either delimiter or maximum receive size
@@ -370,18 +383,18 @@ esp_loader_error_t SLIP_receive_packet(uint8_t *buff, size_t *recv_size,command_
                 return ESP_LOADER_ERROR_INVALID_RESPONSE;
             }
             replace_times++;
-            //qDebug() << "buff[i]=0x:"<<QString::number(buff[i], 16).toUpper();
+            //myDebug() << "buff[i]=0x:"<<QString::number(buff[i], 16).toUpper();
         }
         else if (ch == DELIMITER)
         {
             *recv_size = i;
-            //qDebug() << "uart data ok";
+            //myDebug() << "uart data ok";
             return ESP_LOADER_SUCCESS;
         }
         else
         {
             buff[i] = ch;
-            //qDebug() << "buff[i]=0x:"<<QString::number(buff[i], 16).toUpper();
+            //myDebug() << "buff[i]=0x:"<<QString::number(buff[i], 16).toUpper();
         }
     }
 
@@ -417,7 +430,7 @@ esp_loader_error_t check_response(send_cmd_config *config)
              packet_recv < minimum_packet_recv);//接收到数据方向不为读，命令类型不匹配，数据包长度小于最小接收长度，则继续接收数据包
     if((response->direction != READ_DIRECTION) || (response->command != command) ||(packet_recv < minimum_packet_recv))
         return ESP_LOADER_ERROR_INVALID_RESPONSE;
-     //qDebug() << "direction command packet_recv size OK!";
+     //myDebug() << "direction command packet_recv size OK!";
     response_status_t *status = (response_status_t *)&buf[packet_recv - sizeof(response_status_t)-2];//最后2个字节为状态字.ROM模式为倒数3-4字节
 
     if (status->failed)//状态为1，失败
@@ -442,7 +455,7 @@ esp_loader_error_t check_response(send_cmd_config *config)
             *config->resp_data_recv_size = resp_data_size;
         }
     }
-    //qDebug() << "status OK!";
+    //myDebug() << "status OK!";
     return ESP_LOADER_SUCCESS;
 }
 /***********************************************************
@@ -511,8 +524,8 @@ esp_loader_error_t esp_loader_flash_start(uint32_t offset, uint32_t image_size, 
     bool encryption_in_cmd = encryption_in_begin_flash_cmd(s_target);
     const uint32_t erase_size = calc_erase_size(s_target, offset, image_size);
     const uint32_t blocks_to_write = (image_size + block_size - 1) / block_size;
-    qDebug()<<"encryption_in_cmd:"<<encryption_in_cmd;
-    qDebug()<<"s_target:"<<s_target;
+    myDebug()<<"encryption_in_cmd:"<<encryption_in_cmd;
+    myDebug()<<"s_target:"<<s_target;
     return loader_flash_begin_cmd(offset, erase_size, block_size, blocks_to_write, encryption_in_cmd);//擦除需要重新等待多长时间RYMCU
 }
 static uint8_t compute_checksum(const uint8_t *data, uint32_t size)
@@ -634,10 +647,10 @@ esp_loader_error_t esp_loader_flash_detect_size(uint32_t *flash_size)
     };
 
     uint32_t flash_id = 0;
-    qDebug()<<"1.before spi_flash_command";
+    myDebug()<<"1.before spi_flash_command";
     RETURN_ON_ERROR(spi_flash_command(SPI_FLASH_READ_ID, NULL, 0, &flash_id, 24) );
     uint8_t size_id = flash_id >> 16;
-    qDebug()<<"after spi_flash_command";
+    myDebug()<<"after spi_flash_command";
     // Try finding the size id within supported size ids
     for (size_t i = 0; i < sizeof(size_mapping) / sizeof(size_mapping[0]); i++) {
         if (size_id == size_mapping[i].id) {
@@ -706,10 +719,10 @@ if((rx_size >32) || (tx_size >64)) return ESP_LOADER_ERROR_FAIL;
     // Save SPI configuration
     uint32_t old_spi_usr;
     uint32_t old_spi_usr2;
-    qDebug()<<"2.before esp_loader_read_register";
+    myDebug()<<"2.before esp_loader_read_register";
     RETURN_ON_ERROR( esp_loader_read_register(s_reg->usr, &old_spi_usr) );
     RETURN_ON_ERROR( esp_loader_read_register(s_reg->usr2, &old_spi_usr2) );
-    qDebug()<<"3.after esp_loader_read_register";
+    myDebug()<<"3.after esp_loader_read_register";
 
     if (s_target == ESP8266_CHIP) {
         RETURN_ON_ERROR( spi_set_data_lengths_8266(tx_size, rx_size) );

@@ -18,6 +18,15 @@
 #include <mycom.h>
 #include <ryisp.h>
 #include "esp32/esp32_protocol.h"
+#include <qdebug.h>
+
+//#define QT_DEBUG  //release版本注销，防止调试信息占用资源
+
+#ifdef QT_DEBUG
+#define myDebug() qDebug()
+#else
+#define myDebug() QNoDebug()
+#endif
 
 extern target_registers_t *s_reg;
 extern target_chip_t s_target;//目标芯片型号

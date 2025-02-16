@@ -27,7 +27,6 @@
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include "mycombobox.h"
 
@@ -44,36 +43,24 @@ public:
     QPushButton *pushButtonOpen;
     myComboBox *comboBoxNo;
     QRadioButton *radioButton_led;
-    QWidget *widget;
-    QVBoxLayout *verticalLayout;
-    QComboBox *comboBoxComBaud;
-    QComboBox *comboBoxData;
     QComboBox *comboBoxStop;
     QComboBox *comboBoxCheck;
-    QWidget *widget1;
-    QVBoxLayout *verticalLayout_2;
+    QComboBox *comboBoxComBaud;
+    QComboBox *comboBoxData;
     QLabel *labelBaud;
     QLabel *labelData;
     QLabel *labelStop;
     QLabel *labelCheck;
     QGroupBox *groupBoxSendSet;
-    QWidget *widget2;
-    QVBoxLayout *verticalLayout_5;
     QPushButton *pushButtonRdFile;
     QPushButton *pushButtonClearSend;
-    QWidget *widget3;
-    QVBoxLayout *verticalLayout_6;
     QCheckBox *checkBoxSendHex;
     QCheckBox *checkBoxAddNewShift;
     QCheckBox *checkBoxAutoDownload;
     QGroupBox *groupBoxRevSet;
-    QWidget *widget4;
-    QVBoxLayout *verticalLayout_3;
     QPushButton *pushButtonSaveRev;
     QPushButton *pushButtonStopRev;
     QPushButton *pushButtonClearRev;
-    QWidget *widget5;
-    QVBoxLayout *verticalLayout_4;
     QCheckBox *checkBoxReVTime;
     QCheckBox *checkBoxRevHex;
     QGroupBox *groupBoxSend;
@@ -208,178 +195,79 @@ public:
         radioButton_led->setCheckable(true);
         radioButton_led->setChecked(false);
         radioButton_led->setAutoExclusive(false);
-        widget = new QWidget(groupBoxComSet);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(70, 60, 91, 101));
-        verticalLayout = new QVBoxLayout(widget);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        comboBoxComBaud = new QComboBox(widget);
+        comboBoxStop = new QComboBox(groupBoxComSet);
+        comboBoxStop->setObjectName(QStringLiteral("comboBoxStop"));
+        comboBoxStop->setGeometry(QRect(70, 113, 91, 22));
+        comboBoxStop->setFont(font);
+        comboBoxCheck = new QComboBox(groupBoxComSet);
+        comboBoxCheck->setObjectName(QStringLiteral("comboBoxCheck"));
+        comboBoxCheck->setGeometry(QRect(70, 139, 91, 22));
+        comboBoxCheck->setFont(font);
+        comboBoxComBaud = new QComboBox(groupBoxComSet);
         comboBoxComBaud->setObjectName(QStringLiteral("comboBoxComBaud"));
         comboBoxComBaud->setEnabled(true);
+        comboBoxComBaud->setGeometry(QRect(70, 60, 91, 23));
         comboBoxComBaud->setFont(font);
-
-        verticalLayout->addWidget(comboBoxComBaud);
-
-        comboBoxData = new QComboBox(widget);
+        comboBoxData = new QComboBox(groupBoxComSet);
         comboBoxData->setObjectName(QStringLiteral("comboBoxData"));
+        comboBoxData->setGeometry(QRect(70, 87, 91, 22));
         comboBoxData->setFont(font);
         comboBoxData->setLayoutDirection(Qt::LeftToRight);
-
-        verticalLayout->addWidget(comboBoxData);
-
-        comboBoxStop = new QComboBox(widget);
-        comboBoxStop->setObjectName(QStringLiteral("comboBoxStop"));
-        comboBoxStop->setFont(font);
-
-        verticalLayout->addWidget(comboBoxStop);
-
-        comboBoxCheck = new QComboBox(widget);
-        comboBoxCheck->setObjectName(QStringLiteral("comboBoxCheck"));
-        comboBoxCheck->setFont(font);
-
-        verticalLayout->addWidget(comboBoxCheck);
-
-        widget1 = new QWidget(groupBoxComSet);
-        widget1->setObjectName(QStringLiteral("widget1"));
-        widget1->setGeometry(QRect(10, 60, 41, 101));
-        verticalLayout_2 = new QVBoxLayout(widget1);
-        verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        labelBaud = new QLabel(widget1);
+        labelBaud = new QLabel(groupBoxComSet);
         labelBaud->setObjectName(QStringLiteral("labelBaud"));
-
-        verticalLayout_2->addWidget(labelBaud);
-
-        labelData = new QLabel(widget1);
+        labelBaud->setGeometry(QRect(11, 61, 39, 18));
+        labelData = new QLabel(groupBoxComSet);
         labelData->setObjectName(QStringLiteral("labelData"));
-
-        verticalLayout_2->addWidget(labelData);
-
-        labelStop = new QLabel(widget1);
+        labelData->setGeometry(QRect(11, 88, 39, 18));
+        labelStop = new QLabel(groupBoxComSet);
         labelStop->setObjectName(QStringLiteral("labelStop"));
-
-        verticalLayout_2->addWidget(labelStop);
-
-        labelCheck = new QLabel(widget1);
+        labelStop->setGeometry(QRect(11, 115, 39, 18));
+        labelCheck = new QLabel(groupBoxComSet);
         labelCheck->setObjectName(QStringLiteral("labelCheck"));
-
-        verticalLayout_2->addWidget(labelCheck);
-
+        labelCheck->setGeometry(QRect(11, 141, 39, 18));
         pushButtonOpen->raise();
-        labelBaud->raise();
-        labelStop->raise();
-        comboBoxCheck->raise();
-        labelData->raise();
-        comboBoxStop->raise();
         comboBoxNo->raise();
-        comboBoxData->raise();
-        labelCheck->raise();
-        comboBoxComBaud->raise();
         radioButton_led->raise();
-        comboBoxComBaud->raise();
         groupBoxSendSet = new QGroupBox(centralWidget);
         groupBoxSendSet->setObjectName(QStringLiteral("groupBoxSendSet"));
         groupBoxSendSet->setGeometry(QRect(10, 380, 171, 141));
-        widget2 = new QWidget(groupBoxSendSet);
-        widget2->setObjectName(QStringLiteral("widget2"));
-        widget2->setGeometry(QRect(70, 30, 91, 51));
-        verticalLayout_5 = new QVBoxLayout(widget2);
-        verticalLayout_5->setSpacing(6);
-        verticalLayout_5->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
-        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
-        pushButtonRdFile = new QPushButton(widget2);
+        pushButtonRdFile = new QPushButton(groupBoxSendSet);
         pushButtonRdFile->setObjectName(QStringLiteral("pushButtonRdFile"));
-
-        verticalLayout_5->addWidget(pushButtonRdFile);
-
-        pushButtonClearSend = new QPushButton(widget2);
+        pushButtonRdFile->setGeometry(QRect(70, 30, 91, 25));
+        pushButtonClearSend = new QPushButton(groupBoxSendSet);
         pushButtonClearSend->setObjectName(QStringLiteral("pushButtonClearSend"));
-
-        verticalLayout_5->addWidget(pushButtonClearSend);
-
-        widget3 = new QWidget(groupBoxSendSet);
-        widget3->setObjectName(QStringLiteral("widget3"));
-        widget3->setGeometry(QRect(70, 90, 103, 51));
-        verticalLayout_6 = new QVBoxLayout(widget3);
-        verticalLayout_6->setSpacing(6);
-        verticalLayout_6->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
-        verticalLayout_6->setContentsMargins(0, 0, 0, 0);
-        checkBoxSendHex = new QCheckBox(widget3);
+        pushButtonClearSend->setGeometry(QRect(70, 57, 91, 24));
+        checkBoxSendHex = new QCheckBox(groupBoxSendSet);
         checkBoxSendHex->setObjectName(QStringLiteral("checkBoxSendHex"));
-
-        verticalLayout_6->addWidget(checkBoxSendHex);
-
-        checkBoxAddNewShift = new QCheckBox(widget3);
+        checkBoxSendHex->setGeometry(QRect(70, 90, 101, 17));
+        checkBoxAddNewShift = new QCheckBox(groupBoxSendSet);
         checkBoxAddNewShift->setObjectName(QStringLiteral("checkBoxAddNewShift"));
+        checkBoxAddNewShift->setGeometry(QRect(70, 108, 101, 16));
         checkBoxAddNewShift->setCheckable(true);
-
-        verticalLayout_6->addWidget(checkBoxAddNewShift);
-
-        checkBoxAutoDownload = new QCheckBox(widget3);
+        checkBoxAutoDownload = new QCheckBox(groupBoxSendSet);
         checkBoxAutoDownload->setObjectName(QStringLiteral("checkBoxAutoDownload"));
-
-        verticalLayout_6->addWidget(checkBoxAutoDownload);
-
-        pushButtonClearSend->raise();
-        pushButtonRdFile->raise();
-        checkBoxSendHex->raise();
-        checkBoxAddNewShift->raise();
-        checkBoxAutoDownload->raise();
-        checkBoxSendHex->raise();
+        checkBoxAutoDownload->setGeometry(QRect(70, 125, 101, 16));
         groupBoxRevSet = new QGroupBox(centralWidget);
         groupBoxRevSet->setObjectName(QStringLiteral("groupBoxRevSet"));
         groupBoxRevSet->setGeometry(QRect(10, 200, 171, 161));
-        widget4 = new QWidget(groupBoxRevSet);
-        widget4->setObjectName(QStringLiteral("widget4"));
-        widget4->setGeometry(QRect(70, 30, 91, 81));
-        verticalLayout_3 = new QVBoxLayout(widget4);
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
-        pushButtonSaveRev = new QPushButton(widget4);
+        pushButtonSaveRev = new QPushButton(groupBoxRevSet);
         pushButtonSaveRev->setObjectName(QStringLiteral("pushButtonSaveRev"));
-
-        verticalLayout_3->addWidget(pushButtonSaveRev);
-
-        pushButtonStopRev = new QPushButton(widget4);
+        pushButtonSaveRev->setGeometry(QRect(70, 30, 91, 23));
+        pushButtonStopRev = new QPushButton(groupBoxRevSet);
         pushButtonStopRev->setObjectName(QStringLiteral("pushButtonStopRev"));
-
-        verticalLayout_3->addWidget(pushButtonStopRev);
-
-        pushButtonClearRev = new QPushButton(widget4);
+        pushButtonStopRev->setGeometry(QRect(70, 55, 91, 22));
+        pushButtonClearRev = new QPushButton(groupBoxRevSet);
         pushButtonClearRev->setObjectName(QStringLiteral("pushButtonClearRev"));
-
-        verticalLayout_3->addWidget(pushButtonClearRev);
-
-        widget5 = new QWidget(groupBoxRevSet);
-        widget5->setObjectName(QStringLiteral("widget5"));
-        widget5->setGeometry(QRect(70, 124, 77, 31));
-        verticalLayout_4 = new QVBoxLayout(widget5);
-        verticalLayout_4->setSpacing(6);
-        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
-        verticalLayout_4->setContentsMargins(0, 0, 0, 0);
-        checkBoxReVTime = new QCheckBox(widget5);
+        pushButtonClearRev->setGeometry(QRect(70, 79, 91, 22));
+        checkBoxReVTime = new QCheckBox(groupBoxRevSet);
         checkBoxReVTime->setObjectName(QStringLiteral("checkBoxReVTime"));
-
-        verticalLayout_4->addWidget(checkBoxReVTime);
-
-        checkBoxRevHex = new QCheckBox(widget5);
+        checkBoxReVTime->setGeometry(QRect(76, 114, 77, 22));
+        checkBoxRevHex = new QCheckBox(groupBoxRevSet);
         checkBoxRevHex->setObjectName(QStringLiteral("checkBoxRevHex"));
+        checkBoxRevHex->setGeometry(QRect(76, 137, 77, 22));
         checkBoxRevHex->setCheckable(true);
         checkBoxRevHex->setChecked(false);
         checkBoxRevHex->setTristate(false);
-
-        verticalLayout_4->addWidget(checkBoxRevHex);
-
         groupBoxSend = new QGroupBox(centralWidget);
         groupBoxSend->setObjectName(QStringLiteral("groupBoxSend"));
         groupBoxSend->setGeometry(QRect(190, 382, 531, 141));
@@ -575,7 +463,7 @@ public:
         radioButton_combine->setAutoExclusive(false);
         label_BOOT_Combine = new QLabel(groupBox_esp32);
         label_BOOT_Combine->setObjectName(QStringLiteral("label_BOOT_Combine"));
-        label_BOOT_Combine->setGeometry(QRect(421, 31, 40, 16));
+        label_BOOT_Combine->setGeometry(QRect(421, 31, 81, 16));
         label_PART = new QLabel(groupBox_esp32);
         label_PART->setObjectName(QStringLiteral("label_PART"));
         label_PART->setGeometry(QRect(421, 57, 64, 16));
@@ -766,6 +654,20 @@ public:
         groupBoxComSet->setTitle(QApplication::translate("MainWindow", "\344\270\262\345\217\243\350\256\276\347\275\256", Q_NULLPTR));
         pushButtonOpen->setText(QApplication::translate("MainWindow", "\346\211\223\345\274\200\344\270\262\345\217\243", Q_NULLPTR));
         radioButton_led->setText(QString());
+        comboBoxStop->clear();
+        comboBoxStop->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "1", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "1.5", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "2", Q_NULLPTR)
+        );
+        comboBoxCheck->clear();
+        comboBoxCheck->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "None", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "Even", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "Odd", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "Mark", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "Space", Q_NULLPTR)
+        );
         comboBoxComBaud->clear();
         comboBoxComBaud->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "115200", Q_NULLPTR)
@@ -790,20 +692,6 @@ public:
          << QApplication::translate("MainWindow", "6", Q_NULLPTR)
          << QApplication::translate("MainWindow", "7", Q_NULLPTR)
          << QApplication::translate("MainWindow", "8", Q_NULLPTR)
-        );
-        comboBoxStop->clear();
-        comboBoxStop->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "1", Q_NULLPTR)
-         << QApplication::translate("MainWindow", "1.5", Q_NULLPTR)
-         << QApplication::translate("MainWindow", "2", Q_NULLPTR)
-        );
-        comboBoxCheck->clear();
-        comboBoxCheck->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "None", Q_NULLPTR)
-         << QApplication::translate("MainWindow", "Even", Q_NULLPTR)
-         << QApplication::translate("MainWindow", "Odd", Q_NULLPTR)
-         << QApplication::translate("MainWindow", "Mark", Q_NULLPTR)
-         << QApplication::translate("MainWindow", "Space", Q_NULLPTR)
         );
         labelBaud->setText(QApplication::translate("MainWindow", "\346\263\242\347\211\271\347\216\207", Q_NULLPTR));
         labelData->setText(QApplication::translate("MainWindow", "\346\225\260\346\215\256\344\275\215", Q_NULLPTR));
@@ -889,6 +777,7 @@ public:
          << QApplication::translate("MainWindow", "ESP32C3", Q_NULLPTR)
          << QApplication::translate("MainWindow", "ESP32S3", Q_NULLPTR)
          << QApplication::translate("MainWindow", "ESP32C2", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "ESP32_RESERVED0_CHIP", Q_NULLPTR)
          << QApplication::translate("MainWindow", "ESP32H2", Q_NULLPTR)
          << QApplication::translate("MainWindow", "ESP32C6", Q_NULLPTR)
         );

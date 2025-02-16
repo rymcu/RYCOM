@@ -1714,10 +1714,13 @@ void MainWindow::on_pushButton_ESP32ISP_clicked()
     ui->progressBar_BOOT_Combine->setVisible(false);//隐藏进度条
     ui->progressBar_PART->setVisible(false);
     ui->progressBar_APP->setVisible(false);
-    //隐藏文件输入框
+    //显示文件输入框
     ui->lineEdit_BOOT_Combine->setVisible(true);
-    ui->lineEdit_APP->setVisible(true);
-     ui->lineEdit_PART->setVisible(true);
+    if(ui->radioButton_combine->isChecked() == false)
+    {
+      ui->lineEdit_APP->setVisible(true);
+      ui->lineEdit_PART->setVisible(true);
+    }
     flag++;
     if(flag%2)
     {
@@ -1730,6 +1733,8 @@ void MainWindow::on_pushButton_ESP32ISP_clicked()
         ui->groupBoxSend->show();
     }
     ui->groupBox_stm32->move(190*myobjectRate,720*myobjectRate);//显示ESP32下载框时，确保STM32框不可见
+
+    s_target = (target_chip_t)ui->comboBoxCheck_ESP32->currentIndex();//初始化芯片型号
 }
 
 void MainWindow::on_radioButton_combine_clicked()
@@ -1836,6 +1841,7 @@ void MainWindow::on_pushButton_Open_APP_clicked()
 void MainWindow::on_pushButton_ESP32_START_clicked()
 {
     char error;
+    myDebug()<<"s_target:"<<s_target;
     //设置进入ISP标志
     if(ISisping != 0) return;//ISP过程中再次点击按钮，直接返回
     ISisping = 2;
@@ -1870,7 +1876,7 @@ void MainWindow::on_pushButton_ESP32_START_clicked()
 
     ui->TextRev->insertPlainText("\r\n------------------------bootloader握手成功-------------------------\r\n");
     //115200握手成功之后再切换波特率
-    qDebug()<<"ESP32_loader_daud_before:"<<ESP32_loader_daud;
+    myDebug()<<"ESP32_loader_daud_before:"<<ESP32_loader_daud;
     if((115200 != ESP32_loader_daud) && (s_target != ESP8266_CHIP) )//ESP8266不允许改变波特率
     {
         if(ESP_LOADER_SUCCESS != loader_change_baudrate_cmd(ESP32_loader_daud,0))
@@ -1883,20 +1889,26 @@ void MainWindow::on_pushButton_ESP32_START_clicked()
     }
     ui->TextRev->insertPlainText("串口波特率设为：");
     ui->TextRev->insertPlainText(QString::number(ESP32_loader_daud,10));
-    qDebug()<<"ESP32_loader_daud_after:"<<ESP32_loader_daud;
+    myDebug()<<"ESP32_loader_daud_after:"<<ESP32_loader_daud;
     ui->TextRev->insertPlainText("bps\r\n");
     if(s_target == ESP8266_CHIP)ESP32_loader_daud = 115200;
-    MyCom.setBaudRate(ESP32_loader_daud);
-    qDebug()<<"reset baud:"<<ESP32_loader_daud;
+    //确保上位机波特率设置成功
+    //MyCom.close();
+    if(MyCom.setBaudRate(ESP32_loader_daud)) myDebug()<<"MyCom.setBaudRate OK";
+    else myDebug()<<"MyCom.setBaudRate fail";
+    myDebug()<<"reset baud:"<<ESP32_loader_daud;
+    //MyCom.open(QIODevice::ReadWrite);
     delay_msec(500);
+    //MyCom.clear();//改变波特率后会再次发送2个0xC0,要先清除。
+
     if(ESP_LOADER_SUCCESS != esp32_loader_detect_chip(&s_target, &s_reg))
     {
-        qDebug() << "detect chip fail";
+        myDebug() << "detect chip fail";
         ui->TextRev->insertPlainText("获取芯片型号失败!\r\n");
         ResumeFormESP32ISP();
         return;
     }
-   qDebug() << "detect chip OK";
+   myDebug() << "detect chip OK";
     PrintChipInfo();
     get_esp32_addr(s_target,&esp32_bin);
    if(ESP_LOADER_SUCCESS != esp32_loader_spi_attach(0,s_target))
@@ -1904,17 +1916,20 @@ void MainWindow::on_pushButton_ESP32_START_clicked()
        ResumeFormESP32ISP();
        return;
    }
-   qDebug() << "esp32_loader_spi_attach OK,s_target:"<<s_target;
-   ui->TextRev->insertPlainText("\r\nspi flash挂载成功,");
+   myDebug() << "esp32_loader_spi_attach OK,s_target:"<<s_target;
+   ui->TextRev->insertPlainText("\r\n获取芯片flash容量中(稍作等待).......");
+   myDebug() << "\r\n获取芯片flash容量中(稍作等待).......";
    if(ESP_LOADER_SUCCESS != esp_loader_flash_detect_size(&s_target_flash_size))
    {
-       qDebug() << "esp_loader_flash_detect_size fail"<<s_target;
+       myDebug() << "esp_loader_flash_detect_size fail"<<s_target;
        ResumeFormESP32ISP();
        return;
    }
+   ui->TextRev->insertPlainText("\r\nspi flash挂载成功,");
+   myDebug() << "spi flash挂载成功";
    if(ESP_LOADER_SUCCESS != loader_spi_parameters(DEFAULT_FLASH_SIZE))//8M flash
    {
-       qDebug() << "loader_spi_parameters set fail"<<s_target;
+       myDebug() << "loader_spi_parameters set fail"<<s_target;
        ResumeFormESP32ISP();
        return;
    }
@@ -1924,7 +1939,7 @@ void MainWindow::on_pushButton_ESP32_START_clicked()
    ui->TextRev->insertPlainText("MB!");
 
    ui->TextRev->insertPlainText("\r\n参数设置成功!\r\n");
-
+    myDebug() << "---------------------------开始下载-------------------------------";
     ui->TextRev->insertPlainText("---------------------------开始下载-------------------------------\r\n");
     //esp32_flash_binary();
 
@@ -1937,7 +1952,7 @@ void MainWindow::on_pushButton_ESP32_START_clicked()
        ui->TextRev->insertPlainText("\r\n擦除bootloader分区，并开始下载.....\r\n");
        error  = esp32_flash_binary(esp32_bin.boot.data, esp32_bin.boot.size, esp32_bin.boot.addr,BOOT_COMBIN);
        if(0==error)ui->TextRev->insertPlainText("bootloader分区下载成功!\r\n\r\n");
-       qDebug()<<"esp32_bin.app.addr:"<<esp32_bin.app.addr;
+       myDebug()<<"esp32_bin.app.addr:"<<esp32_bin.app.addr;
 
        ui->TextRev->insertPlainText("part.bin:");
        ui->TextRev->insertPlainText(QString::number(esp32_bin.part.size,10));
@@ -1975,7 +1990,7 @@ void MainWindow::on_pushButton_ESP32_START_clicked()
      ResumeFormESP32ISP();
      MyCom.setBaudRate(115200);
      //ISisping = 0;
-     ui->TextRev->insertPlainText("串口助手波特率设置为：115200bps,并复位目标芯片!\r\n");
+     ui->TextRev->insertPlainText("串口助手波特率设置为：115200bps,并复位目标芯片(仅对板载自动下载电路有效)!\r\n");
      ui->TextRev->insertPlainText("\r\n------------RYMCU嵌入式知识学习交流平台(rymcu.com)----------------\r\n\r\n");
     esp32_laoder_reset_target();
 }
@@ -1985,19 +2000,19 @@ esp_loader_error_t MainWindow::esp32_flash_binary(const uint8_t *bin, size_t siz
     static uint8_t payload[1024];
     const uint8_t *bin_addr = bin;
 
-   qDebug()<<"Erasing flash (this may take a while)...";
+   myDebug()<<"Erasing flash (this may take a while)...";
     err = esp_loader_flash_start(address, size, sizeof(payload));
     if (err != ESP_LOADER_SUCCESS)
     {
       //printf("esp_loader_flash_start fail:%d\n",err);
-      qDebug()<<"esp_loader_flash_start fail";
+      myDebug()<<"esp_loader_flash_start fail";
       return err;
     }
     //printf("Start programming\n");
-    qDebug()<<"Start programming....";
+    myDebug()<<"Start programming....";
     size_t binary_size = size;
     size_t written = 0;
-    qDebug()<<"binary_size:"<<size;
+    myDebug()<<"binary_size:"<<size;
     switch (location) {
     case BOOT_COMBIN:
         ui->progressBar_BOOT_Combine->setVisible(true);
@@ -2034,13 +2049,13 @@ esp_loader_error_t MainWindow::esp32_flash_binary(const uint8_t *bin, size_t siz
     {
         size_t to_read = MIN(size, sizeof(payload));
         memcpy(payload, bin_addr, to_read);
-        //qDebug()<<"payload[0]:"<<payload[0];
-        //qDebug()<<"payload[1]:"<<payload[1];
-        //qDebug()<<"payload[2]:"<<payload[2];
+        //myDebug()<<"payload[0]:"<<payload[0];
+        //myDebug()<<"payload[1]:"<<payload[1];
+        //myDebug()<<"payload[2]:"<<payload[2];
 
         err = esp_loader_flash_write(payload, to_read);
         if (err != ESP_LOADER_SUCCESS) {
-            qDebug()<<"Packet could not be written"<<err;
+            myDebug()<<"Packet could not be written"<<err;
             return err;
         }
 
@@ -2050,7 +2065,7 @@ esp_loader_error_t MainWindow::esp32_flash_binary(const uint8_t *bin, size_t siz
 
         //int progress = (int)(((float)written / binary_size) * 100);
        // printf("\rProgress: %d %%", progress);
-        //qDebug()<<"progress:"<<progress;
+        //myDebug()<<"progress:"<<progress;
         switch (location)
         {
             case BOOT_COMBIN:
@@ -2068,7 +2083,7 @@ esp_loader_error_t MainWindow::esp32_flash_binary(const uint8_t *bin, size_t siz
 
     };
 
-    qDebug()<<"Finished programming";
+    myDebug()<<"Finished programming";
 
     return ESP_LOADER_SUCCESS;
 }
@@ -2115,7 +2130,7 @@ char MainWindow::ESP32BinProcess()
 
     esp32_bin.boot.data = (uint8_t *)BOOT_Combine_ByteArray.data();
     esp32_bin.boot.size = BOOT_Combine_ByteArray.size();
-    qDebug()<<"BOOT_Combine_ByteArray.size:"<<esp32_bin.boot.size;
+    myDebug()<<"BOOT_Combine_ByteArray.size:"<<esp32_bin.boot.size;
 
     if(ui->radioButton_combine->isChecked() == false)//未选中，需要下载3个bin
     {
@@ -2124,11 +2139,11 @@ char MainWindow::ESP32BinProcess()
 
         esp32_bin.part.data = (uint8_t *)PART_ByteArray.data();
         esp32_bin.part.size = PART_ByteArray.size();
-        qDebug()<<"PART_ByteArray.size:"<<esp32_bin.part.size;
+        myDebug()<<"PART_ByteArray.size:"<<esp32_bin.part.size;
 
         esp32_bin.app.data = (uint8_t *)APP_ByteArray.data();
         esp32_bin.app.size = APP_ByteArray.size();
-        qDebug()<<"APP_ByteArray.size:"<<esp32_bin.app.size;
+        myDebug()<<"APP_ByteArray.size:"<<esp32_bin.app.size;
 
     }
     //get_esp32_addr(s_target,&esp32_bin);
@@ -2179,12 +2194,13 @@ char MainWindow::OpenESP32bin(QByteArray *bindata,location_code_t location)
         ui->TextRev->insertPlainText("bindata.isNull()\r\n");
         return 1;
     }
-    qDebug()<<"bindata:"<<bindata->size();
+    myDebug()<<"bindata:"<<bindata->size();
     return 0;
 }
 
 void MainWindow::on_comboBoxCheck_ESP32_currentIndexChanged(int index)
 {
+    s_target = (target_chip_t)index;//初始化芯片型号
     switch (index) {
     case 0://8266
     case 1://ESP32
