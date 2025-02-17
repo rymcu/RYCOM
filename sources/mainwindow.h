@@ -25,7 +25,13 @@
 #include <QSettings>
 
 extern QSerialPort MyCom;//串口对象，项目中唯一的串口对象
-
+//运行的操作系统
+enum SYS_TYPE
+{
+  Windows,
+  MACos,
+  Linux
+};
 namespace Ui {
 class MainWindow;
 }
@@ -160,7 +166,7 @@ private:
     QString byteArrayToUnicode(const QByteArray &array);//编码格式转换
 
     void changeObjectSize(const QObject &o, double objectRate);//调整控件大小
-    void refreshDPI();//刷新界面
+    void refreshDPI(SYS_TYPE system);//刷新界面
     QScreen* screen;
     double myobjectRate;//dpi比例，用于调整主窗口的大小
     char ISisping;//1：表示正在进行STM32程序下载，2：表示正在进行ESP32程序下载

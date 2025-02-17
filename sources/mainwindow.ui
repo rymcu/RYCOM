@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>RYCOM串口调试助手V2.6.1 rymcu.com嵌入式知识学习交流平台</string>
+   <string>RYCOM串口调试助手V2.6.2 rymcu.com嵌入式知识学习交流平台</string>
   </property>
   <property name="dockNestingEnabled">
    <bool>false</bool>
@@ -39,7 +39,7 @@
     <property name="geometry">
      <rect>
       <x>660</x>
-      <y>370</y>
+      <y>372</y>
       <width>31</width>
       <height>16</height>
      </rect>
@@ -57,7 +57,7 @@
     <property name="geometry">
      <rect>
       <x>695</x>
-      <y>370</y>
+      <y>372</y>
       <width>16</width>
       <height>16</height>
      </rect>
@@ -75,7 +75,7 @@
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>370</y>
+      <y>372</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -105,7 +105,7 @@
        <x>70</x>
        <y>170</y>
        <width>91</width>
-       <height>23</height>
+       <height>22</height>
       </rect>
      </property>
      <property name="text">
@@ -118,7 +118,7 @@
        <x>10</x>
        <y>30</y>
        <width>151</width>
-       <height>23</height>
+       <height>22</height>
       </rect>
      </property>
      <property name="font">
@@ -242,7 +242,7 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
        <x>70</x>
        <y>60</y>
        <width>91</width>
-       <height>23</height>
+       <height>22</height>
       </rect>
      </property>
      <property name="font">
@@ -438,9 +438,9 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>380</y>
+      <y>382</y>
       <width>171</width>
-      <height>141</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="title">
@@ -450,9 +450,9 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
      <property name="geometry">
       <rect>
        <x>70</x>
-       <y>30</y>
+       <y>25</y>
        <width>91</width>
-       <height>25</height>
+       <height>22</height>
       </rect>
      </property>
      <property name="text">
@@ -463,9 +463,9 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
      <property name="geometry">
       <rect>
        <x>70</x>
-       <y>57</y>
+       <y>52</y>
        <width>91</width>
-       <height>24</height>
+       <height>22</height>
       </rect>
      </property>
      <property name="text">
@@ -475,10 +475,10 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
     <widget class="QCheckBox" name="checkBoxSendHex">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>90</y>
+       <x>76</x>
+       <y>80</y>
        <width>101</width>
-       <height>17</height>
+       <height>22</height>
       </rect>
      </property>
      <property name="text">
@@ -488,10 +488,10 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
     <widget class="QCheckBox" name="checkBoxAddNewShift">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>108</y>
+       <x>76</x>
+       <y>103</y>
        <width>101</width>
-       <height>16</height>
+       <height>22</height>
       </rect>
      </property>
      <property name="text">
@@ -504,14 +504,14 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
     <widget class="QCheckBox" name="checkBoxAutoDownload">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>125</y>
+       <x>76</x>
+       <y>123</y>
        <width>101</width>
-       <height>16</height>
+       <height>22</height>
       </rect>
      </property>
      <property name="text">
-      <string>自动启动下载</string>
+      <string>自启动下载</string>
      </property>
     </widget>
    </widget>
@@ -533,7 +533,7 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
        <x>70</x>
        <y>30</y>
        <width>91</width>
-       <height>23</height>
+       <height>22</height>
       </rect>
      </property>
      <property name="text">
@@ -605,10 +605,10 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
    <widget class="QGroupBox" name="groupBoxSend">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>180</x>
       <y>382</y>
-      <width>531</width>
-      <height>141</height>
+      <width>541</width>
+      <height>151</height>
      </rect>
     </property>
     <property name="title">
@@ -620,10 +620,10 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
      </property>
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>20</y>
-       <width>541</width>
-       <height>121</height>
+       <x>10</x>
+       <y>30</y>
+       <width>521</width>
+       <height>111</height>
       </rect>
      </property>
      <property name="plainText">
@@ -672,9 +672,9 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
+       <y>30</y>
        <width>321</width>
-       <height>331</height>
+       <height>321</height>
       </rect>
      </property>
      <property name="layoutDirection">
@@ -692,7 +692,7 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
     <property name="geometry">
      <rect>
       <x>500</x>
-      <y>370</y>
+      <y>372</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -1145,72 +1145,46 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
       <string>7</string>
      </property>
     </widget>
-    <widget class="QGroupBox" name="groupBox_2">
+    <widget class="QPushButton" name="pushButtonMutiReset">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>10</x>
        <y>330</y>
-       <width>191</width>
-       <height>31</height>
+       <width>31</width>
+       <height>23</height>
       </rect>
      </property>
-     <property name="title">
-      <string/>
+     <property name="text">
+      <string>复位</string>
      </property>
-     <widget class="QPushButton" name="pushButtonMutiReset">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>0</y>
-        <width>31</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>复位</string>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBoxPeriodicMutiSend">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>0</y>
-        <width>131</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>多行循环发送</string>
-      </property>
-      <property name="checkable">
-       <bool>true</bool>
-      </property>
-     </widget>
     </widget>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QCheckBox" name="checkBoxPeriodicMutiSend">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>20</y>
-       <width>191</width>
-       <height>16</height>
+       <x>50</x>
+       <y>330</y>
+       <width>131</width>
+       <height>23</height>
       </rect>
      </property>
-     <property name="title">
-      <string/>
+     <property name="text">
+      <string>多行循环发送</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>
    <widget class="QPushButton" name="pushButton_RYISP">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
       <x>260</x>
       <y>370</y>
       <width>91</width>
-      <height>21</height>
+      <height>22</height>
      </rect>
     </property>
     <property name="text">
@@ -1286,14 +1260,14 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
    </widget>
    <widget class="QPushButton" name="pushButton_ESP32ISP">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
       <x>370</x>
       <y>370</y>
       <width>91</width>
-      <height>21</height>
+      <height>22</height>
      </rect>
     </property>
     <property name="text">
@@ -1309,14 +1283,14 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
    <widget class="QGroupBox" name="groupBox_esp32">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>180</x>
       <y>560</y>
       <width>531</width>
-      <height>125</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="title">
-     <string>ESP32下载设置</string>
+     <string>ESP32设置</string>
     </property>
     <widget class="QPushButton" name="pushButton_Open_BOOT_Combine">
      <property name="geometry">
@@ -1735,14 +1709,14 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
    <widget class="QGroupBox" name="groupBox_stm32">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>180</x>
       <y>720</y>
       <width>531</width>
-      <height>125</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="title">
-     <string>STM32下载设置</string>
+     <string>STM32设置</string>
     </property>
     <widget class="QPushButton" name="pushButton_STM32_START">
      <property name="geometry">
@@ -1940,7 +1914,7 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
      <x>0</x>
      <y>0</y>
      <width>728</width>
-     <height>26</height>
+     <height>36</height>
     </rect>
    </property>
   </widget>

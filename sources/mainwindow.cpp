@@ -13,8 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    refreshDPI(); //根据dpi调整窗体大小
+    //根据系统选择参数：Windows，MACos,Linux
+    refreshDPI(MACos); //根据系统dpi调整窗体大小
     //connect(screen, &QScreen::logicalDotsPerInchChanged, this, &MainWindow::onLogicalDotsPerInchChanged);
         //失能和隐藏相应控件
         ui->pushButtonSend->setEnabled(false);//使相应的按钮不可用
@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
         ui->groupBoxRev->setFixedWidth(541*myobjectRate);//根据屏幕分辨率不一样固定接收组的大小
         ui->TextRev->setFixedWidth(521*myobjectRate);//根据屏幕分辨率不一样固定接收窗口的大小
-        this->setFixedSize(729*myobjectRate,564*myobjectRate);//根据屏幕分辨率不一样固定主窗口的大小
+        this->setFixedSize(729*myobjectRate,584*myobjectRate);//根据屏幕分辨率不一样固定主窗口的大小
 
 
         //创建周期发送、时间显示、延时接收定时器，并初始化
@@ -91,7 +91,7 @@ MainWindow::MainWindow(QWidget *parent) :
          qlbLinkRYMCU->setOpenExternalLinks(true);//状态栏显示官网、源码链接
          qlbLinkRYMCU->setText("<style> a {text-decoration: none} </style> <a href=\"https://rymcu.com\">--RYMCU官网--");// 无下划线
          qlbLinkSource->setOpenExternalLinks(true);
-         qlbLinkSource->setText("<style> a {text-decoration: none} </style> <a href=\"https://github.com/rymcu/RYCOM\">--助手源代码V2.6.1--");// 无下划线
+         qlbLinkSource->setText("<style> a {text-decoration: none} </style> <a href=\"https://github.com/rymcu/RYCOM\">--助手源代码V2.6.2--");// 无下划线
          //隐藏进度条
          ui->progressBar->setVisible(false);
          //串口指示灯设置为只读控件，屏蔽鼠标点击事件
@@ -1137,7 +1137,7 @@ void MainWindow::SendDataByNoOfEditLineNo(int EditLineNo)
 *刷新dpi，获取当前屏幕状态，并伸缩所用控件的大小
 *只在窗口构造函数中调用，因此，改变屏幕分辨率需要重新启动软件
 ***********************************************************/
-void MainWindow::refreshDPI()
+void MainWindow::refreshDPI(SYS_TYPE system)
 {
     //计算dpi
     QList<QScreen*> screens = QApplication::screens();
@@ -1145,7 +1145,23 @@ void MainWindow::refreshDPI()
     qreal dpi = screen->logicalDotsPerInch();
 
     //计算dpi对应的缩放比例,96win,72mac
-    double objectRate = dpi/96.0;//72
+    double sys_type;
+    switch (system)
+    {
+        case Windows:
+            sys_type = 96.0;
+            break;
+        case MACos:
+            sys_type = 72.0;
+            break;
+        case Linux:
+            sys_type = 96.0;
+            break;
+        default:
+            sys_type = 96.0;
+            break;
+    }
+    double objectRate = dpi/sys_type;
     myobjectRate=objectRate;
     changeObjectSize(*this, objectRate);
     resize(width()*objectRate,height()*objectRate);
@@ -1210,19 +1226,24 @@ void MainWindow::ResumeFormESP32ISP(void)
 void MainWindow::on_pushButton_RYISP_clicked()
 {
     static uint8_t flag_stm32 = 0;
+    if(!MyCom.isOpen())
+    {
+         QMessageBox::critical(this, "提示", "请先打开串口!");
+        return;
+    }
     ui->progressBar->setVisible(false);//隐藏进度条
     flag_stm32++;
     if(flag_stm32%2)
     {
-        ui->groupBox_stm32->move(190*myobjectRate,395*myobjectRate);
+        ui->groupBox_stm32->move(180*myobjectRate,382*myobjectRate);
         ui->groupBoxSend->hide();
     }
     else
     {
-        ui->groupBox_stm32->move(190*myobjectRate,720*myobjectRate);
+        ui->groupBox_stm32->move(180*myobjectRate,720*myobjectRate);
         ui->groupBoxSend->show();
     }
-    ui->groupBox_esp32->move(190*myobjectRate,596*myobjectRate);//显示STM32下载框时，确保ESP32框不可见
+    ui->groupBox_esp32->move(180*myobjectRate,596*myobjectRate);//显示STM32下载框时，确保ESP32框不可见
 }
 
 /***********************************************************
@@ -1751,6 +1772,11 @@ void MainWindow::timer_FileChanged()
 void MainWindow::on_pushButton_ESP32ISP_clicked()
 {
     static uint8_t flag = 0;
+    if(!MyCom.isOpen())
+    {
+         QMessageBox::critical(this, "提示", "请先打开串口!");
+        return;
+    }
     ui->progressBar_BOOT_Combine->setVisible(false);//隐藏进度条
     ui->progressBar_PART->setVisible(false);
     ui->progressBar_APP->setVisible(false);
@@ -1764,15 +1790,15 @@ void MainWindow::on_pushButton_ESP32ISP_clicked()
     flag++;
     if(flag%2)
     {
-        ui->groupBox_esp32->move(190*myobjectRate,395*myobjectRate);
+        ui->groupBox_esp32->move(180*myobjectRate,382*myobjectRate);
         ui->groupBoxSend->hide();
     }
     else
     {
-        ui->groupBox_esp32->move(190*myobjectRate,596*myobjectRate);
+        ui->groupBox_esp32->move(180*myobjectRate,596*myobjectRate);
         ui->groupBoxSend->show();
     }
-    ui->groupBox_stm32->move(190*myobjectRate,720*myobjectRate);//显示ESP32下载框时，确保STM32框不可见
+    ui->groupBox_stm32->move(180*myobjectRate,720*myobjectRate);//显示ESP32下载框时，确保STM32框不可见
 
     s_target = (target_chip_t)ui->comboBoxCheck_ESP32->currentIndex();//初始化芯片型号
 }
