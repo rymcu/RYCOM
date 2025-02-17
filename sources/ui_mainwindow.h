@@ -225,6 +225,14 @@ public:
         labelCheck = new QLabel(groupBoxComSet);
         labelCheck->setObjectName(QStringLiteral("labelCheck"));
         labelCheck->setGeometry(QRect(11, 141, 39, 18));
+        comboBoxStop->raise();
+        comboBoxCheck->raise();
+        comboBoxComBaud->raise();
+        comboBoxData->raise();
+        labelBaud->raise();
+        labelData->raise();
+        labelStop->raise();
+        labelCheck->raise();
         pushButtonOpen->raise();
         comboBoxNo->raise();
         radioButton_led->raise();
@@ -620,7 +628,7 @@ public:
         groupBox_stm32->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 728, 36));
+        menuBar->setGeometry(QRect(0, 0, 728, 26));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));

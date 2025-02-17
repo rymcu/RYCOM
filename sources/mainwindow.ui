@@ -422,8 +422,14 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
       <string>校验位</string>
      </property>
     </widget>
-    <zorder>layoutWidget</zorder>
-    <zorder>layoutWidget</zorder>
+    <zorder>comboBoxStop</zorder>
+    <zorder>comboBoxCheck</zorder>
+    <zorder>comboBoxComBaud</zorder>
+    <zorder>comboBoxData</zorder>
+    <zorder>labelBaud</zorder>
+    <zorder>labelData</zorder>
+    <zorder>labelStop</zorder>
+    <zorder>labelCheck</zorder>
     <zorder>pushButtonOpen</zorder>
     <zorder>comboBoxNo</zorder>
     <zorder>radioButton_led</zorder>
@@ -1934,7 +1940,7 @@ QRadioButton::indicator{width:25px;height:25px;border-radius:12px;}</string>
      <x>0</x>
      <y>0</y>
      <width>728</width>
-     <height>36</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

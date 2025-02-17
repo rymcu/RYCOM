@@ -99,7 +99,7 @@ int  insertsomething(QByteArray* desQByte,uint8_t* addr, int num )
     return num;
 }
 
-RESULT_STATUS HexFile2BinFile(char *src, char *dest, uint32_t *addr)
+RESULT_STATUS HexFile2BinFile(const char *src, char *dest, uint32_t *addr)
 {  
     FILE *src_file;// *dest_file;
 	uint16_t addr_low = 0;

@@ -1145,7 +1145,7 @@ void MainWindow::refreshDPI()
     qreal dpi = screen->logicalDotsPerInch();
 
     //计算dpi对应的缩放比例,96win,72mac
-    double objectRate = dpi/72.0;//72
+    double objectRate = dpi/96.0;//72
     myobjectRate=objectRate;
     changeObjectSize(*this, objectRate);
     resize(width()*objectRate,height()*objectRate);
@@ -1475,8 +1475,9 @@ char MainWindow:: OpenMyFile()
 
      if(aFileName.contains(".hex"))
      {
-         QByteArray ba = aFileName.toUtf8();//QByteArray ba = aFileName.toLatin1();
-         char *c_str = ba.data();
+         //QByteArray ba = aFileName.toUtf8();
+         QByteArray ba = aFileName.toLocal8Bit();
+        const char *c_str = ba.constData();
          text.clear();
          //RESULT_STATUS res = HexFile2BinFile(c_str, "/") ;
          //if(res != RES_OK) return;

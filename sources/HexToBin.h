@@ -32,5 +32,5 @@ typedef struct {
 	uint8_t *data;
 } BinFarmat;
  
-RESULT_STATUS HexFile2BinFile(char *src, char *dest,uint32_t* addr);
+RESULT_STATUS HexFile2BinFile(const char *src, char *dest,uint32_t* addr);
 #endif

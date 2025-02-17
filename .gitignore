@@ -20,3 +20,7 @@
 *.iex 
 *.htm 
 *.map
+*.DS_Store
+*.Debug
+*.Release
+*.bak
