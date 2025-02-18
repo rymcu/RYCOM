@@ -28,7 +28,7 @@ RYCOM 是一款开源的跨平台串口调试助手，使用 QT 设计，C++ 编
 ---
 ## 📥 安装文件下载
 
-RYCOM 提供了 Windows 和 MacOS 的安装包，您可以在 [Release 页面](https://gitee.com/rymcu/RYCOM/releases/tag/2.6.2) 下载对应操作系统的安装文件：
+RYCOM 提供了 Windows 和 MacOS 的安装包，您可以在 [Release 页面](https://github.com/rymcu/RYCOM/releases/tag/2.6.2) 下载对应操作系统的安装文件：
 
 - **Windows**: 下载 `RYCOM 2.6.2-Setup.exe` 安装包。
 - **MacOS**: 下载 `RYCOM 2.6.2.dmg` 安装包。
