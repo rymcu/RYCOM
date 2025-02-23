@@ -3,8 +3,6 @@
 RYCOM 是一款开源的跨平台串口调试助手，使用 QT 设计，C++ 编写，支持 Windows、Linux 和 MacOS 操作系统。它支持 STM32，ESP32 串口下载程序，并提供了丰富的功能和特性，适用于嵌入式开发和调试。
 
 ---
-![win](images/RYCOM-win.png)
-![mac](images/RYCOM-mac.png)
 ## ✨ 特性
 
 ### 基本功能
@@ -35,6 +33,16 @@ RYCOM 提供了 Windows 和 MacOS 的安装包，您可以在 [Release 页面](h
 - **MacOS**: 下载 `RYCOM 2.6.2.dmg` 安装包。
 
 请根据您的操作系统选择合适的安装包，并按照提示完成安装。
+---
+#### win界面
+<div align="center">
+  <img src="images/RYCOM-win.png" alt="Logo" width="80%">
+</div>
+
+#### mac界面
+<div align="center">
+  <img src="images/RYCOM-mac.png" alt="Logo" width="80%">
+</div>
 ## ⚡ 动机
 
 RYCOM 的灵感来源于 [ronger](https://github.com/ronger) 的跨平台串口助手 [nebula-helper](https://github.com/ronger/nebula-helper)。我们希望通过 C++ 实现一个功能更强大、更易用的跨平台串口调试工具。
