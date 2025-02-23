@@ -3,7 +3,8 @@
 RYCOM 是一款开源的跨平台串口调试助手，使用 QT 设计，C++ 编写，支持 Windows、Linux 和 MacOS 操作系统。它支持 STM32，ESP32 串口下载程序，并提供了丰富的功能和特性，适用于嵌入式开发和调试。
 
 ---
-
+![win](images/RYCOM-win.png)
+![mac](images/RYCOM-mac.png)
 ## ✨ 特性
 
 ### 基本功能
