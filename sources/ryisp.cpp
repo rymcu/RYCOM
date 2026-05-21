@@ -2,12 +2,39 @@
 
 DeviceInfo_t DeviceInfo;//赋值
 unsigned int ISPBeginAddr;
+
+namespace {
+const int STM32_ISP_BYTE_TIMEOUT_MS = 500;
+const int STM32_ISP_ERASE_TIMEOUT_MS = 180000;
+
+bool ReadByte(char *data, int timeoutMs = STM32_ISP_BYTE_TIMEOUT_MS)
+{
+    int timeflag = 0;
+    while(MyComRevBUff.isEmpty())
+    {
+        delay_msec(1);//出让线程
+        timeflag++;
+        if(timeflag >= timeoutMs) return false;
+    }
+
+    *data = MyComRevBUff.at(0);
+    MyComRevBUff.remove(0, 1);
+    return true;
+}
+
+bool WaitAck(int timeoutMs = STM32_ISP_BYTE_TIMEOUT_MS)
+{
+    char ack = 0;
+    if(!ReadByte(&ack, timeoutMs)) return false;
+    return static_cast<unsigned char>(ack) == 0x79;
+}
+}
+
 char GetByte()
 {
     //MyComRevBUff.size();
-    char temp;
-    temp = MyComRevBUff.at(0);
-    MyComRevBUff.remove(0,1);
+    char temp = 0;
+    ReadByte(&temp);
     return temp;
 }
 void SendByte(char SendData)
@@ -23,28 +50,8 @@ void SendByte(char SendData)
 /////////////////////////////////////////////////
 char ACK()    
 {
-    /*
-  delay_msec(200);//延时200ms
-         if(MyComRevBUff.size())//收到串口数据
-        {
-            //ISMyComRevData = 0;
-            if(0x79 == GetByte()) return 1;
-            else                  return 0;
-        }
-        return 0;
-        */
-    int timeflag = 0;
-    while(!MyComRevBUff.size())
-    {
-        delay_msec(1);//出让线程
-        timeflag++;
-        if(timeflag>=500) return 0;//等待500ms,没有反应，直接跳出
-    }
-     //ISMyComRevData = 0;
-    if(0x79 == GetByte()) return 1;
-    else                  return 0;
-
-
+    if(WaitAck()) return 1;
+    else          return 0;
 }
 /////////////////////////////////////////////////
 //
@@ -89,9 +96,17 @@ char GetCMD(DeviceInfo_t *DInfo)
    error = ACK();if(!error) return 0;
 
    //step2 接收数据
-   len = GetByte();  DInfo->cmd_count = len;//第一个字节为命令数量N
-   DInfo->bootloaderversion = GetByte();//第二个字节为版本号
-   for(int i =0;i<len;i++) DInfo->cmd[i] = GetByte();//获取CMD
+   if(!ReadByte(&len)) return 0;
+   const int cmdCount = static_cast<unsigned char>(len);
+   const int cmdCapacity = static_cast<int>(sizeof(DInfo->cmd));
+   DInfo->cmd_count = static_cast<char>(cmdCount > cmdCapacity ? cmdCapacity : cmdCount);//第一个字节为命令数量N
+   if(!ReadByte(&DInfo->bootloaderversion)) return 0;//第二个字节为版本号
+   for(int i =0;i<cmdCount;i++)
+   {
+       char cmd = 0;
+       if(!ReadByte(&cmd)) return 0;
+       if(i < cmdCapacity) DInfo->cmd[i] = cmd;//获取CMD
+   }
    error = ACK();if(!error) return 0;
 
     //step3 处理数据，并打印版本号，命令等
@@ -113,8 +128,15 @@ char GetID(DeviceInfo_t *DInfo)
     error = ACK();if(!error) return 0;
 
     //step2 接收PID，并等待ACK
-    len = GetByte();//第一个字节为ID长度N-1
-    for(int i =0;i<=len;i++) DInfo->PID[i] = GetByte();//获取ID
+    if(!ReadByte(&len)) return 0;//第一个字节为ID长度N-1
+    const int idCount = static_cast<unsigned char>(len) + 1;
+    const int idCapacity = static_cast<int>(sizeof(DInfo->PID));
+    for(int i =0;i<idCount;i++)
+    {
+        char pid = 0;
+        if(!ReadByte(&pid)) return 0;
+        if(i < idCapacity) DInfo->PID[i] = pid;//获取ID
+    }
     error = ACK();if(!error) return 0;
 
     return 1;
@@ -151,7 +173,12 @@ char ReadMem(unsigned char *data, unsigned int addr, unsigned char len)
     SendByte(~len);
     error = ACK();if(!error) return 0;
     //step4 接收长度为len+1的数据
-    for(i=0;i<=len;i++) data[i] = GetByte();
+    for(i=0;i<=len;i++)
+    {
+        char byte = 0;
+        if(!ReadByte(&byte)) return 0;
+        data[i] = static_cast<unsigned char>(byte);
+    }
     
     return 1;
 }
@@ -216,12 +243,8 @@ char EraseAll()
     //不同的产品，全片擦除的时间长短不一，500ms的时间不一定够，
     //因此不能用现成的ACK函数，需重写如下：
     //error = ACK();if(!error) return 0;
-    while(!MyComRevBUff.size())
-    {
-        delay_msec(1);//出让线程
-    }
-    if(0x79 == GetByte()) return 1;
-    else                  return 0;
+    if(WaitAck(STM32_ISP_ERASE_TIMEOUT_MS)) return 1;
+    else                                    return 0;
 }
 /////////////////////////////////////////////////
 //
@@ -249,12 +272,8 @@ char ExtendedEraseAll()
     //不同的产品，全片擦除的时间长短不一，500ms的时间不一定够，
     //因此不能用现成的ACK函数，需重写如下：
     //error = ACK();if(!error) return 0;
-    while(!MyComRevBUff.size())
-    {
-        delay_msec(1);//出让线程
-    }
-    if(0x79 == GetByte()) return 1;
-    else                  return 0;
+    if(WaitAck(STM32_ISP_ERASE_TIMEOUT_MS)) return 1;
+    else                                    return 0;
 }
 /////////////////////////////////////////////////
 //

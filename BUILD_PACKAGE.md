@@ -5,7 +5,7 @@
 最终输出文件必须是：
 
 ```text
-build-codex/RYCOM-2.6.3-Setup.exe
+build-codex/RYCOM-2.6.4-Setup.exe
 ```
 
 安装包内容必须来自 `windeployqt` 收集后的运行目录，不能直接把 `release` 编译目录打包。这样可以保证安装后的 `RYCOM.exe` 在脱离编译目录后仍能找到 Qt DLL、MinGW DLL 和 Qt 插件。
@@ -112,7 +112,7 @@ $env:PATH="$QtDir\bin;$MingwDir\bin;$env:PATH"
 
 $release = Resolve-Path -LiteralPath 'build-codex\release'
 $packageRoot = Join-Path (Resolve-Path -LiteralPath 'build-codex') 'package'
-$appDir = Join-Path $packageRoot 'RYCOM-2.6.3'
+$appDir = Join-Path $packageRoot 'RYCOM-2.6.4'
 
 if (Test-Path -LiteralPath $appDir) {
     Remove-Item -LiteralPath $appDir -Recurse -Force
@@ -145,12 +145,12 @@ foreach ($dll in @('libgcc_s_seh-1.dll','libstdc++-6.dll','libwinpthread-1.dll')
 运行目录应包含：
 
 ```text
-build-codex/package/RYCOM-2.6.3/RYCOM.exe
-build-codex/package/RYCOM-2.6.3/Qt6Core.dll
-build-codex/package/RYCOM-2.6.3/Qt6Gui.dll
-build-codex/package/RYCOM-2.6.3/Qt6Widgets.dll
-build-codex/package/RYCOM-2.6.3/Qt6SerialPort.dll
-build-codex/package/RYCOM-2.6.3/platforms/qwindows.dll
+build-codex/package/RYCOM-2.6.4/RYCOM.exe
+build-codex/package/RYCOM-2.6.4/Qt6Core.dll
+build-codex/package/RYCOM-2.6.4/Qt6Gui.dll
+build-codex/package/RYCOM-2.6.4/Qt6Widgets.dll
+build-codex/package/RYCOM-2.6.4/Qt6SerialPort.dll
+build-codex/package/RYCOM-2.6.4/platforms/qwindows.dll
 ```
 
 `windeployqt` 如果提示缺少 `dxcompiler.dll`、`dxil.dll`，当前 RYCOM 不使用 Qt Quick/Direct3D Shader 功能，通常不影响本程序运行。
@@ -160,26 +160,26 @@ build-codex/package/RYCOM-2.6.3/platforms/qwindows.dll
 仓库已经提供 NSIS 脚本：
 
 ```text
-installer/RYCOM-2.6.3.nsi
+installer/RYCOM-2.6.4.nsi
 ```
 
 该脚本固定读取：
 
 ```text
-build-codex/package/RYCOM-2.6.3
+build-codex/package/RYCOM-2.6.4
 ```
 
 并输出：
 
 ```text
-build-codex/RYCOM-2.6.3-Setup.exe
+build-codex/RYCOM-2.6.4-Setup.exe
 ```
 
 在仓库根目录执行：
 
 ```powershell
 $NsisExe = 'C:\Program Files (x86)\NSIS\makensis.exe'
-& $NsisExe 'installer\RYCOM-2.6.3.nsi'
+& $NsisExe 'installer\RYCOM-2.6.4.nsi'
 ```
 
 ## 6. 验证输出
@@ -187,13 +187,13 @@ $NsisExe = 'C:\Program Files (x86)\NSIS\makensis.exe'
 确认安装包存在：
 
 ```powershell
-Get-Item build-codex\RYCOM-2.6.3-Setup.exe
+Get-Item build-codex\RYCOM-2.6.4-Setup.exe
 ```
 
 可选：先运行部署后的目录，检查是否缺 DLL：
 
 ```powershell
-$exe = (Resolve-Path -LiteralPath 'build-codex\package\RYCOM-2.6.3\RYCOM.exe').Path
+$exe = (Resolve-Path -LiteralPath 'build-codex\package\RYCOM-2.6.4\RYCOM.exe').Path
 $p = Start-Process -FilePath $exe -WorkingDirectory (Split-Path $exe) -PassThru
 Start-Sleep -Seconds 3
 Get-Process -Id $p.Id | Select-Object Id, ProcessName, MainWindowTitle, Path
@@ -215,9 +215,9 @@ Codex 在新机器上处理本工程时，应遵守以下规则：
 - 固定使用 `build-codex/` 作为构建和打包输出目录，不把生成物写入源码目录。
 - 编译前先确认 Qt、MinGW、NSIS 三类工具路径，路径不同则只替换变量，不修改工程结构。
 - `qmake` 失败并提示缺少 `serialport` 时，先安装或编译同版本 QtSerialPort，再继续构建。
-- 安装包必须基于 `build-codex/package/RYCOM-2.6.3`，不能直接打包 `build-codex/release`。
+- 安装包必须基于 `build-codex/package/RYCOM-2.6.4`，不能直接打包 `build-codex/release`。
 - 必须先运行 `windeployqt`，再执行 NSIS。
-- 最终必须确认 `build-codex/RYCOM-2.6.3-Setup.exe` 存在。
+- 最终必须确认 `build-codex/RYCOM-2.6.4-Setup.exe` 存在。
 - `build-codex/` 是生成目录，不提交到 Git。
 
 ## 8. 一次性命令汇总
@@ -239,7 +239,7 @@ Pop-Location
 
 $release = Resolve-Path -LiteralPath 'build-codex\release'
 $packageRoot = Join-Path (Resolve-Path -LiteralPath 'build-codex') 'package'
-$appDir = Join-Path $packageRoot 'RYCOM-2.6.3'
+$appDir = Join-Path $packageRoot 'RYCOM-2.6.4'
 
 if (Test-Path -LiteralPath $appDir) {
     Remove-Item -LiteralPath $appDir -Recurse -Force
@@ -259,6 +259,6 @@ foreach ($dll in @('libgcc_s_seh-1.dll','libstdc++-6.dll','libwinpthread-1.dll')
     }
 }
 
-& $NsisExe 'installer\RYCOM-2.6.3.nsi'
-Get-Item build-codex\RYCOM-2.6.3-Setup.exe
+& $NsisExe 'installer\RYCOM-2.6.4.nsi'
+Get-Item build-codex\RYCOM-2.6.4-Setup.exe
 ```

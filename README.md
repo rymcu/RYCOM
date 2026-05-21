@@ -34,18 +34,18 @@ RYCOM 是一款开源的跨平台串口调试助手，使用 QT 设计，C++ 编
 ---
 ## 📥 安装文件下载
 
-RYCOM 提供了 Windows 和 MacOS 的安装包，您可以在 [Release 页面](https://github.com/rymcu/RYCOM/releases/tag/2.6.2) 下载对应操作系统的安装文件：
+RYCOM 提供了 Windows 和 MacOS 的安装包，您可以在 [Release 页面](https://github.com/rymcu/RYCOM/releases/tag/2.6.4) 下载对应操作系统的安装文件：
 
-- **Windows**: 下载 `RYCOM 2.6.2-Setup.exe` 安装包。
-- **MacOS**: 下载 `RYCOM 2.6.2.dmg` 安装包。
+- **Windows**: 下载 `RYCOM-2.6.4-Setup.exe` 安装包。
+- **MacOS**: 下载 `RYCOM-2.6.4.dmg` 安装包。
 
 请根据您的操作系统选择合适的安装包，并按照提示完成安装。
 
 ## 🧰 从源码生成安装包
 
-如果从 GitHub 下载源码后需要在 Windows 上编译并生成 NSIS 安装包，请按 [RYCOM Windows 源码编译与安装包生成说明](BUILD_PACKAGE.md) 操作。该说明固定使用 `build-codex/` 作为输出目录，并通过 `windeployqt` 收齐运行依赖后生成 `RYCOM-2.6.3-Setup.exe`。
+如果从 GitHub 下载源码后需要在 Windows 上编译并生成 NSIS 安装包，请按 [RYCOM Windows 源码编译与安装包生成说明](BUILD_PACKAGE.md) 操作。该说明固定使用 `build-codex/` 作为输出目录，并通过 `windeployqt` 收齐运行依赖后生成 `RYCOM-2.6.4-Setup.exe`。
 
-如果需要生成 macOS `.dmg`，请在 macOS 上按 [RYCOM macOS DMG 打包说明](BUILD_MACOS_DMG.md) 操作，输出为 `build-codex/RYCOM-2.6.3.dmg`。
+如果需要生成 macOS `.dmg`，请在 macOS 上按 [RYCOM macOS DMG 打包说明](BUILD_MACOS_DMG.md) 操作，输出为 `build-codex/RYCOM-2.6.4.dmg`。
 
 ## ⚡ 动机
 

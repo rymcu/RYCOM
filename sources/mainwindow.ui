@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-  <string>RYCOM串口调试助手V2.6.3 rymcu.com嵌入式知识学习交流平台</string>
+  <string>RYCOM串口调试助手V2.6.4 rymcu.com嵌入式知识学习交流平台</string>
   </property>
   <property name="dockNestingEnabled">
    <bool>false</bool>

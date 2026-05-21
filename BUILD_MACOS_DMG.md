@@ -5,7 +5,7 @@
 最终输出文件：
 
 ```text
-build-codex/RYCOM-2.6.3.dmg
+build-codex/RYCOM-2.6.4.dmg
 ```
 
 注意：`.dmg` 需要 macOS 的 `hdiutil`，Qt 依赖收集需要 `macdeployqt`。Windows 环境不能生成一个真实可运行的 macOS `.dmg`。
@@ -58,10 +58,10 @@ QT_BIN="$HOME/Qt/6.9.2/macos/bin" ./scripts/package_macos_dmg.sh
 - 清理并创建 `build-codex/macos/`
 - 使用 `qmake` 编译 `sources/RYCOM.pro`
 - 生成 `build-codex/macos/RYCOM.app`
-- 写入 `CFBundleShortVersionString=2.6.3`
+- 写入 `CFBundleShortVersionString=2.6.4`
 - 复制 `sources/rymculogo.icns`
 - 执行 `macdeployqt RYCOM.app -dmg`
-- 将输出统一改名为 `build-codex/RYCOM-2.6.3.dmg`
+- 将输出统一改名为 `build-codex/RYCOM-2.6.4.dmg`
 
 ## 3. 可选签名
 
@@ -80,13 +80,13 @@ QT_BIN="$HOME/Qt/6.9.2/macos/bin" \
 确认输出存在：
 
 ```bash
-ls -lh build-codex/RYCOM-2.6.3.dmg
+ls -lh build-codex/RYCOM-2.6.4.dmg
 ```
 
 挂载检查：
 
 ```bash
-hdiutil attach build-codex/RYCOM-2.6.3.dmg
+hdiutil attach build-codex/RYCOM-2.6.4.dmg
 open /Volumes/RYCOM/RYCOM.app
 hdiutil detach /Volumes/RYCOM
 ```
@@ -98,7 +98,7 @@ hdiutil detach /Volumes/RYCOM
 Codex 在 macOS 机器上处理本工程时，应遵守：
 
 - 使用 `scripts/package_macos_dmg.sh` 生成 `.dmg`。
-- 固定输出到 `build-codex/RYCOM-2.6.3.dmg`。
+- 固定输出到 `build-codex/RYCOM-2.6.4.dmg`。
 - 不要使用仓库里的旧 `sources/RYCOM.app` 作为发布产物。
 - 必须通过 `macdeployqt` 收齐 Qt Framework 和插件。
 - `build-codex/` 是生成目录，不提交到 Git。

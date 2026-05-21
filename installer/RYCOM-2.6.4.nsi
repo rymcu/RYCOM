@@ -2,13 +2,13 @@ Unicode true
 RequestExecutionLevel admin
 
 !define APP_NAME "RYCOM"
-!define APP_VERSION "2.6.3"
+!define APP_VERSION "2.6.4"
 !define APP_PUBLISHER "RYMCU"
 !define APP_EXE "RYCOM.exe"
-!define SOURCE_DIR "..\build-codex\package\RYCOM-2.6.3"
+!define SOURCE_DIR "..\build-codex\package\RYCOM-2.6.4"
 
 Name "${APP_NAME} ${APP_VERSION}"
-OutFile "..\build-codex\RYCOM-2.6.3-Setup.exe"
+OutFile "..\build-codex\RYCOM-2.6.4-Setup.exe"
 InstallDir "$PROGRAMFILES32\RYMCU\RYCOM"
 InstallDirRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "InstallLocation"
 

@@ -105,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent) :
          qlbLinkRYMCU->setOpenExternalLinks(true);//状态栏显示官网、源码链接
          qlbLinkRYMCU->setText("<style> a {text-decoration: none} </style> <a href=\"https://rymcu.com\">--RYMCU官网--");// 无下划线
          qlbLinkSource->setOpenExternalLinks(true);
-         qlbLinkSource->setText("<style> a {text-decoration: none} </style> <a href=\"https://github.com/rymcu/RYCOM\">--助手源代码V2.6.3--");// 无下划线
+         qlbLinkSource->setText("<style> a {text-decoration: none} </style> <a href=\"https://github.com/rymcu/RYCOM\">--助手源代码V2.6.4--");// 无下划线
          //隐藏进度条
          ui->progressBar->setVisible(false);
          //串口指示灯设置为只读控件，屏蔽鼠标点击事件
@@ -171,7 +171,16 @@ void MainWindow::MyComRevSlot()
 
     //停止接收延时定时器，读取串口接收到的数据，并格式化数据
     recvDelayTimer->stop();
-    MyComRevBUff = MyCom.readAll();
+    QByteArray readData = MyCom.readAll();
+    if(ISisping == 1)
+    {
+        MyComRevBUff.append(readData);
+        ComRevSum += readData.size();
+        setNumOnLabel(qlbRevSum, "Rx: ", ComRevSum);
+        return;
+    }
+
+    MyComRevBUff = readData;
 
     StrTemp = QString::fromLocal8Bit(MyComRevBUff);
 
@@ -184,9 +193,6 @@ void MainWindow::MyComRevSlot()
     //获取串口数据接收的系统时间，备后续使用
     curDateTime = QDateTime::currentDateTime();
     StrTimeDate = curDateTime.toString("[yyyy-MM-dd hh:mm:ss.zzz] ");
-
-    //stm32 ISP期间不显示接收数据
-    if(ISisping == 1) return;
 
     //开始显示数据，显示模式包括：是否16进制，是否显示接收时间
     if(ui->checkBoxRevHex->checkState() == false)//正常文本显示
@@ -1212,9 +1218,9 @@ void MainWindow::changeObjectSize(const QObject &o, double objectRate)
 ***********************************************************/
 QString CharToHex(char *data,char num)
 {
-     QString  StrTemp,StrTemp1;
-     QByteArray  temptset;
-    for(int i=0;i<num;i++) temptset[i]=data[i];
+     QString StrTemp,StrTemp1;
+     if(data == nullptr || num <= 0) return StrTemp1;
+     QByteArray temptset(data, static_cast<unsigned char>(num));
 
      StrTemp = temptset.toHex().toUpper();//转换为16进制数，并大写
      for(int i = 0; i<StrTemp.length (); i+=2)//整理字符串，即添加空格
