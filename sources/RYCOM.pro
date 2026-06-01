@@ -4,8 +4,8 @@
 #
 #-------------------------------------------------
 
-#添加串口支持
-QT       += core gui serialport
+#添加串口和网络支持
+QT       += core gui serialport network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -32,6 +32,8 @@ ICON = rymculogo.icns
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
+    systemstatusprovider.cpp \
+    lanstatushttpserver.cpp \
     mycombobox.cpp \
     ryisp.cpp \
     mycom.cpp \
@@ -42,6 +44,8 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
+    systemstatusprovider.h \
+    lanstatushttpserver.h \
     mycombobox.h \
     ryisp.h \
     mycom.h \

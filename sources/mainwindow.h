@@ -29,6 +29,13 @@
 #include <QFileInfo>
 #include <QSettings>
 
+#include <lanstatushttpserver.h>
+#include <systemstatusprovider.h>
+
+class QLineEdit;
+class QPushButton;
+class QStatusBar;
+
 extern QSerialPort MyCom;//串口对象，项目中唯一的串口对象
 //运行的操作系统
 enum SYS_TYPE
@@ -127,6 +134,8 @@ private slots:
     void on_comboBoxCheck_ESP32_currentIndexChanged(int index);
 
     void on_pushButton_STM32_START_clicked();
+    void onLanStatusButtonClicked();
+    void refreshLanStatus();
 
 private:
     Ui::MainWindow *ui;
@@ -155,6 +164,11 @@ private:
     QLabel *currentTimeLabel; //系统时间显示标签
     QLabel *qlbLinkRYMCU;//官网链接标签对象
     QLabel *qlbLinkSource;//源码链接标签对象
+    QPushButton *lanStatusButton;//局域网电脑状态服务启动按钮
+    QLineEdit *lanStatusUrlEdit;//局域网电脑状态服务地址显示框
+    QTimer *lanStatusTimer;//电脑状态刷新定时器
+    SystemStatusProvider systemStatusProvider;
+    LanStatusHttpServer *lanStatusHttpServer;
 
     void Pre_on_pushButtonSend_clicked();//多行周期发送预处理函数
     int Get_checkBoxMuti_State();//获取多行周期发送的选中状态
@@ -164,6 +178,8 @@ private:
     void timer_FileChanged();//用于监控文件更改
 
     void setNumOnLabel(QLabel *lbl, QString strS, long num);//设置标签内容
+    void setupLanStatusWidgets(QStatusBar *statusBar);//初始化局域网状态服务控件
+    void updateLanStatusWidgets();//刷新局域网状态服务控件显示
 
     //文件打开、保存、编码转换函数
     bool openTextByIODevice(const QString &aFileName);

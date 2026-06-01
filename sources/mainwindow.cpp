@@ -3,6 +3,8 @@
 #include <QCoreApplication>
 #include <QElapsedTimer>
 #include <QEventLoop>
+#include <QLineEdit>
+#include <QPushButton>
 
 /***********************************************************
  * 窗口构造函数，初始化工作在这里完成！
@@ -13,7 +15,8 @@
  ***********************************************************/
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    lanStatusHttpServer(nullptr)
 {
     ui->setupUi(this);
     //根据系统选择参数：Windows，MACos,Linux
@@ -82,6 +85,10 @@ MainWindow::MainWindow(QWidget *parent) :
         currentTimeLabel = new QLabel(this); // 创建时间，日期显示标签
         qlbLinkRYMCU = new QLabel(this);//官网链接标签对象
         qlbLinkSource = new QLabel(this);//源码链接标签对象
+        lanStatusButton = nullptr;
+        lanStatusUrlEdit = nullptr;
+        lanStatusTimer = new QTimer(this);
+        lanStatusHttpServer = new LanStatusHttpServer(&systemStatusProvider, this);
 
         qlbLinkRYMCU->setMinimumSize(90, 20);// 设置标签最小大小
         qlbLinkSource->setMinimumSize(90, 20);
@@ -101,11 +108,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
          STABar->addWidget(qlbLinkRYMCU);// 从左往右依次添加
          STABar->addWidget(qlbLinkSource);
+         setupLanStatusWidgets(STABar);
 
          qlbLinkRYMCU->setOpenExternalLinks(true);//状态栏显示官网、源码链接
          qlbLinkRYMCU->setText("<style> a {text-decoration: none} </style> <a href=\"https://rymcu.com\">--RYMCU官网--");// 无下划线
          qlbLinkSource->setOpenExternalLinks(true);
          qlbLinkSource->setText("<style> a {text-decoration: none} </style> <a href=\"https://github.com/rymcu/RYCOM\">--助手源代码V2.6.4--");// 无下划线
+         connect(lanStatusTimer, &QTimer::timeout, this, &MainWindow::refreshLanStatus);
+         updateLanStatusWidgets();
          //隐藏进度条
          ui->progressBar->setVisible(false);
          //串口指示灯设置为只读控件，屏蔽鼠标点击事件
@@ -117,6 +127,9 @@ MainWindow::MainWindow(QWidget *parent) :
  ***********************************************************/
 MainWindow::~MainWindow()
 {
+    if (lanStatusHttpServer != nullptr) {
+        lanStatusHttpServer->stop();
+    }
     delete ui;
 }
 
@@ -154,6 +167,82 @@ void MainWindow::setNumOnLabel(QLabel *lbl, QString strS, long num)
     QString strN = QString::number(num);
     QString str = strS + strN;
     lbl->setText(str);
+}
+
+void MainWindow::setupLanStatusWidgets(QStatusBar *statusBar)
+{
+    lanStatusButton = new QPushButton(this);
+    lanStatusButton->setText("启动状态");
+    lanStatusButton->setMinimumHeight(20);
+    lanStatusButton->setMaximumHeight(22);
+    lanStatusButton->setFixedWidth(68);
+    lanStatusButton->setToolTip("启动局域网电脑状态HTTP服务");
+
+    lanStatusUrlEdit = new QLineEdit(this);
+    lanStatusUrlEdit->setReadOnly(true);
+    lanStatusUrlEdit->setFixedWidth(120);
+    lanStatusUrlEdit->setMinimumHeight(20);
+    lanStatusUrlEdit->setMaximumHeight(22);
+    lanStatusUrlEdit->setText("状态未启动");
+    lanStatusUrlEdit->setToolTip("状态未启动");
+
+    statusBar->addWidget(lanStatusButton);
+    statusBar->addWidget(lanStatusUrlEdit);
+
+    connect(lanStatusButton, &QPushButton::clicked, this, &MainWindow::onLanStatusButtonClicked);
+}
+
+void MainWindow::updateLanStatusWidgets()
+{
+    if (lanStatusHttpServer != nullptr && lanStatusHttpServer->isRunning()) {
+        const QString url = lanStatusHttpServer->statusUrl();
+        lanStatusButton->setText("停止状态");
+        lanStatusButton->setToolTip("停止局域网电脑状态HTTP服务");
+        lanStatusUrlEdit->setText(url);
+        lanStatusUrlEdit->setToolTip(url);
+        lanStatusUrlEdit->setCursorPosition(0);
+    } else {
+        lanStatusButton->setText("启动状态");
+        lanStatusButton->setToolTip("启动局域网电脑状态HTTP服务");
+        lanStatusUrlEdit->setText("状态未启动");
+        lanStatusUrlEdit->setToolTip("状态未启动");
+    }
+}
+
+void MainWindow::onLanStatusButtonClicked()
+{
+    if (lanStatusHttpServer == nullptr) {
+        return;
+    }
+
+    if (lanStatusHttpServer->isRunning()) {
+        lanStatusTimer->stop();
+        lanStatusHttpServer->stop();
+        updateLanStatusWidgets();
+        return;
+    }
+
+    systemStatusProvider.refresh();
+    if (!lanStatusHttpServer->start(18765)) {
+        const QString error = lanStatusHttpServer->errorString();
+        lanStatusUrlEdit->setText("启动失败");
+        lanStatusUrlEdit->setToolTip(error);
+        QMessageBox::warning(this, "提示",
+                             "状态服务启动失败：\r\n" + error +
+                             "\r\n\r\n请检查端口18765是否被占用，或确认系统防火墙允许RYCOM访问局域网。");
+        lanStatusButton->setText("启动状态");
+        lanStatusButton->setToolTip("启动局域网电脑状态HTTP服务");
+        return;
+    }
+
+    lanStatusTimer->start(1000);
+    updateLanStatusWidgets();
+}
+
+void MainWindow::refreshLanStatus()
+{
+    systemStatusProvider.refresh();
+    updateLanStatusWidgets();
 }
 
 /***********************************************************
