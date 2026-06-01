@@ -113,7 +113,7 @@ MainWindow::MainWindow(QWidget *parent) :
          qlbLinkRYMCU->setOpenExternalLinks(true);//状态栏显示官网、源码链接
          qlbLinkRYMCU->setText("<style> a {text-decoration: none} </style> <a href=\"https://rymcu.com\">--RYMCU官网--");// 无下划线
          qlbLinkSource->setOpenExternalLinks(true);
-         qlbLinkSource->setText("<style> a {text-decoration: none} </style> <a href=\"https://github.com/rymcu/RYCOM\">--助手源代码V2.6.4--");// 无下划线
+         qlbLinkSource->setText("<style> a {text-decoration: none} </style> <a href=\"https://github.com/rymcu/RYCOM\">--助手源代码V2.6.5--");// 无下划线
          connect(lanStatusTimer, &QTimer::timeout, this, &MainWindow::refreshLanStatus);
          updateLanStatusWidgets();
          //隐藏进度条
@@ -173,16 +173,16 @@ void MainWindow::setupLanStatusWidgets(QStatusBar *statusBar)
 {
     lanStatusButton = new QPushButton(this);
     lanStatusButton->setText("启动状态");
-    lanStatusButton->setMinimumHeight(20);
-    lanStatusButton->setMaximumHeight(22);
+    lanStatusButton->setMinimumHeight(21);
+    lanStatusButton->setMaximumHeight(21);
     lanStatusButton->setFixedWidth(68);
     lanStatusButton->setToolTip("启动局域网电脑状态HTTP服务");
 
     lanStatusUrlEdit = new QLineEdit(this);
     lanStatusUrlEdit->setReadOnly(true);
-    lanStatusUrlEdit->setFixedWidth(120);
-    lanStatusUrlEdit->setMinimumHeight(20);
-    lanStatusUrlEdit->setMaximumHeight(22);
+    lanStatusUrlEdit->setFixedWidth(100);
+    lanStatusUrlEdit->setMinimumHeight(21);
+    lanStatusUrlEdit->setMaximumHeight(21);
     lanStatusUrlEdit->setText("状态未启动");
     lanStatusUrlEdit->setToolTip("状态未启动");
 
@@ -196,9 +196,10 @@ void MainWindow::updateLanStatusWidgets()
 {
     if (lanStatusHttpServer != nullptr && lanStatusHttpServer->isRunning()) {
         const QString url = lanStatusHttpServer->statusUrl();
+        const QString ip = SystemStatusProvider::primaryLocalIpv4();
         lanStatusButton->setText("停止状态");
         lanStatusButton->setToolTip("停止局域网电脑状态HTTP服务");
-        lanStatusUrlEdit->setText(url);
+        lanStatusUrlEdit->setText(ip);
         lanStatusUrlEdit->setToolTip(url);
         lanStatusUrlEdit->setCursorPosition(0);
     } else {
